@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101522" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Teach Me Linux" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+  <meta name="description" content="Learn Ubuntu through teacher-led lessons, predictions, worked examples, guided labs, independent challenges, and mastery checks." />
+  <title>Teach Me Linux — Instructor-Led Ubuntu Course</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg:#090f19;--surface:#111a28;--surface2:#172335;--surface3:#1b2a3d;
+      --border:#2b3b51;--text:#eff5fc;--muted:#a9bbcb;--dim:#7d96aa;
+      --orange:#f1784c;--orange2:#ffad70;--mint:#70e1b8;--blue:#8dbcff;
+      --shadow:0 18px 60px #00000035;--radius:18px;
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 74% -15%,#1b3041 0%,transparent 33%),var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+    a{color:#a8cdff}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--orange2);outline-offset:3px}
+    .skip{position:absolute;left:-10000px;top:0;background:#fff;color:#000;z-index:1000;padding:9px}.skip:focus{left:10px}
+    .wrap{max-width:1420px;margin:0 auto;padding:0 30px 45px}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:23px 0 21px;border-bottom:1px solid var(--border)}
+    .brand{display:flex;align-items:center;gap:13px;min-width:210px}.brand-mark{height:46px;width:46px;border-radius:14px;background:linear-gradient(135deg,#fc975c,#dc4b33);display:grid;place-items:center;color:#1c1110;font-weight:900;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:20px;box-shadow:0 8px 30px #ec714940}
+    .brand-title{font-weight:850;font-size:19px;line-height:1.13;letter-spacing:-.5px}.brand-sub{font-size:10px;color:var(--orange2);letter-spacing:1.8px;font-weight:800;margin-top:5px}
+    .topnav{display:flex;gap:6px;padding:5px;border:1px solid var(--border);border-radius:14px;background:#111a28}.navbtn{color:var(--muted);padding:9px 15px;background:transparent;border:0;border-radius:10px;font-weight:720;font-size:13px;white-space:nowrap}.navbtn.active{color:var(--text);background:var(--surface3);box-shadow:inset 0 0 0 1px #3b4e66}.navbtn:hover:not(.active){color:var(--text)}
+    .top-prog{display:flex;align-items:center;gap:11px;white-space:nowrap;font-weight:750;font-size:13px}.circle{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;border:2px solid var(--orange);color:var(--orange2)}
+    .eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--orange2)}
+    .hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(320px,.7fr);gap:28px;align-items:center;margin-top:34px;margin-bottom:31px}
+    .hero h1{max-width:710px;font-size:clamp(34px,4.3vw,59px);line-height:1.08;letter-spacing:-2.1px;margin:12px 0 16px;font-weight:840}
+    .hero h1 em{font-style:normal;background:linear-gradient(100deg,#ffa46a 15%,#f26952 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero p{color:var(--muted);font-size:17px;max-width:650px;margin:0 0 24px}.hero-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:11px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-weight:750;padding:12px 17px;font-size:14px;min-height:44px}.btn:hover{background:#23354a}.btn.primary{background:linear-gradient(120deg,#e85c39,#f0834b);color:#1b100e;border-color:#fa9468}.btn.primary:hover{filter:brightness(1.08)}.btn.ghost{background:transparent}.btn.small{font-size:12px;padding:8px 12px;min-height:36px}
+    .trustrow{display:flex;gap:20px;flex-wrap:wrap;margin-top:23px;color:var(--muted);font-size:12px}.trustrow span{display:flex;align-items:center;gap:7px}.trustrow b{color:var(--mint);font-weight:850}
+    .hero-art{border-radius:20px;border:1px solid #435168;background:linear-gradient(160deg,#1e3044,#101924 55%,#171e2e);padding:18px;box-shadow:var(--shadow);min-height:296px;position:relative;overflow:hidden}.hero-art:before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:#e76d4933;filter:blur(63px);right:-70px;top:-90px;pointer-events:none}
+    .terminal-top{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:11px;color:#9fb1c0;margin-bottom:12px}.dots{display:flex;gap:6px}.dots i{width:9px;height:9px;border-radius:50%;background:#e66b61}.dots i:nth-child(2){background:#f6b65e}.dots i:nth-child(3){background:#68c0a0}
+    .art-terminal{background:#08101c;border:1px solid #35465b;border-radius:13px;padding:17px 15px;font:13px/2 ui-monospace,SFMono-Regular,Consolas,monospace;color:#c9d6e2;min-height:222px;position:relative}.art-terminal .prompt{color:#71ddb5}.art-terminal .cmd{color:#eef6ff}.art-terminal .result{color:#98adc0}.art-terminal .highlight{color:#f6a16a}.art-label{position:absolute;bottom:14px;right:14px;background:#273b42;border:1px solid #4c726f;color:#8ae3bc;padding:3px 9px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.5px}
+    .section-title{font-size:22px;letter-spacing:-.6px;margin:0 0 6px}.section-sub{color:var(--muted);margin:0 0 21px;font-size:14px}.progresspanel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:19px;display:flex;gap:20px;align-items:center;justify-content:space-between}.progresspanel h3{margin:0;font-size:14px}.progresspanel p{margin:4px 0 0;color:var(--muted);font-size:12px}.progressbar{height:8px;width:min(35vw,300px);border-radius:30px;background:#2b3b4f;overflow:hidden}.progressbar>span{display:block;height:100%;border-radius:30px;background:linear-gradient(90deg,#e4694e,#f7ae68);transition:width .35s}
+    .lesson-layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:20px;align-items:start}.lesson-list{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);padding:10px;display:grid;gap:4px}.lesson-item{width:100%;border:1px solid transparent;background:transparent;color:var(--text);padding:12px 10px;display:flex;align-items:center;gap:11px;text-align:left;border-radius:11px}.lesson-item:hover{background:#213044}.lesson-item.active{border-color:#805c49;background:#2c2b34}.lesson-num{width:33px;height:33px;border-radius:9px;background:#27374b;color:#c0d1df;display:grid;place-items:center;font:700 11px ui-monospace,SFMono-Regular,monospace;flex:0 0 auto}.lesson-item.active .lesson-num{background:#6f392e;color:#ffbd9a}.lesson-item.done .lesson-num{background:#1c5149;color:#94f8d5}.lesson-text{min-width:0;flex:1}.lesson-text b{font-size:13px;display:block}.lesson-text small{display:block;color:var(--dim);font-size:11px;margin-top:1px}.lesson-status{color:var(--orange2);font-weight:900;font-size:15px}.lesson-item.done .lesson-status{color:var(--mint)}
+    .detail{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);overflow:hidden;min-width:0}.detail-header{padding:27px 28px 19px;border-bottom:1px solid var(--border);background:radial-gradient(ellipse at 100% -50%,#593b3538,transparent 62%)}.detail-top{display:flex;justify-content:space-between;gap:12px;align-items:center}.tag{display:inline-flex;align-items:center;gap:5px;color:#fac7a6;background:#392c30;border:1px solid #65483d;border-radius:999px;padding:4px 10px;font-size:11px;font-weight:760}.tag.green{color:#a0f3d0;background:#173b36;border-color:#32665a}.tag.gray{color:#bacddd;background:#243242;border-color:#3c4e60}
+    .detail h2{font-size:29px;line-height:1.18;letter-spacing:-.8px;margin:16px 0 9px}.detail-desc{color:var(--muted);max-width:690px;margin:0 0 16px}.concept{padding:12px 14px;background:#1d2b39;border:1px solid #354b5e;border-left:3px solid var(--orange);border-radius:9px;color:#c9d8e4;font-size:13px}.concept strong{color:#fff}.concept code,.step-code,code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.concept code{color:#ffb491}
+    .detail-body{padding:23px 28px 28px}.mission-title{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:14px}.mission-title h3{margin:0;font-size:16px}.mission-title span{font-size:12px;color:var(--muted)}
+    .steps{display:grid;gap:9px}.step{display:flex;gap:13px;align-items:flex-start;padding:12px 13px;border-radius:11px;border:1px solid #314358;background:#172436}.step.current{background:#2e2b30;border-color:#9d664b}.step.complete{border-color:#2e6458;background:#192c30}.step.locked{opacity:.61}.step-dot{display:grid;place-items:center;width:25px;height:25px;flex:0 0 25px;border:1px solid #596d7d;border-radius:50%;color:#d4e1eb;font-weight:750;font-size:11px}.step.complete .step-dot{color:#a8f8d3;background:#24554b;border-color:#448776}.step.current .step-dot{color:#ffbd94;border-color:#e99d70}.step-text{flex:1;min-width:0}.step-text strong{display:block;font-size:13px;font-weight:720}.step-text .note{font-size:12px;color:var(--muted);margin-top:3px}.hintbtn{background:none;border:0;color:var(--orange2);text-decoration:underline;font-size:12px;padding:3px 0}.hintline{font-size:12px;color:#e4c9a6;margin-top:5px;overflow-wrap:anywhere}.hintline code{background:#382b30;color:#ffb88e;border-radius:5px;padding:3px 6px}
+    .terminal-zone{margin-top:20px;border:1px solid #39516b;background:#08111e;border-radius:14px;overflow:hidden}.terminal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-bottom:1px solid #263c53;background:#142334}.terminal-head strong{font-size:12px;letter-spacing:.2px}.terminal-head small{color:#91acbf;font-size:11px}.terminal-controls{display:flex;gap:7px;flex-wrap:wrap}.tiny{border:1px solid #405269;background:#243449;color:#d9e5ef;font-size:11px;padding:6px 10px;border-radius:7px}.tiny:hover{background:#344c63}
+    .terminal-output{min-height:173px;max-height:250px;overflow-y:auto;padding:14px;font:12.5px/1.75 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;scrollbar-color:#5d6c80 #101d2d}.line{white-space:pre-wrap;overflow-wrap:anywhere}.line.input{color:#e5f3fe}.line.input .ps1{color:#6de1b0}.line.system{color:#91aabc}.line.success{color:#84f0b9}.line.error{color:#ffa297}.line.output{color:#c9d7e5}.line.muted{color:#829aad}
+    .terminal-form{display:flex;align-items:center;padding:11px 14px;border-top:1px solid #263c53;gap:7px}.terminal-form label{color:#75dfb4;font:12px ui-monospace,SFMono-Regular,Consolas,monospace;white-space:nowrap}.terminal-form input{min-width:0;flex:1;background:transparent;border:0;outline:0;color:#fff;font:13px ui-monospace,SFMono-Regular,Consolas,monospace;padding:7px 3px;caret-color:var(--orange2)}.terminal-form input:focus-visible{outline:0}.terminal-form:focus-within{box-shadow:inset 0 -2px var(--orange)}.run-btn{background:#e87953;border:0;color:#1a1310;border-radius:8px;padding:8px 13px;font-weight:830;font-size:12px}
+    .terminal-foot{padding:8px 13px;background:#152638;color:#95b0c6;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10.5px}.terminal-foot span:first-child{display:flex;align-items:center;gap:6px}.safedot{width:7px;height:7px;display:inline-block;border-radius:50%;background:#80ecba}
+    .quiz{margin-top:18px;padding:18px;background:#1b2e3c;border:1px solid #3e5e67;border-radius:13px}.quiz h3{margin:5px 0 10px;font-size:16px}.quiz p{color:var(--muted);font-size:13px;margin:0 0 12px}.quiz-choices{display:flex;gap:8px;flex-wrap:wrap}.quiz-choices button{background:#25394b;border:1px solid #486075;color:#e7f0fa;border-radius:9px;padding:10px 12px;text-align:left;font-size:13px}.quiz-choices button:hover{border-color:#f5a87c}.quiz-choices button:disabled{opacity:1;cursor:default}.quiz-choices button.correct{border-color:#54bfa1;background:#1c4c42;color:#b6f8db}.quiz-feedback{font-size:13px;margin-top:12px;color:var(--orange2)}.quiz-feedback.good{color:var(--mint)}
+    .finish{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:17px;padding:14px 16px;border-radius:11px;background:#193b34;border:1px solid #34735b}.finish b{color:#a8f4d3}.finish small{color:#b9ddcf;display:block;margin-top:3px}.footer{margin-top:31px;padding:19px 0;border-top:1px solid var(--border);font-size:12px;color:var(--dim);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.footer a{color:#c1d7ea}
+    .page-heading{margin:36px 0 22px}.page-heading h1{font-size:clamp(30px,3vw,43px);margin:8px 0 8px;letter-spacing:-1.4px}.page-heading p{margin:0;color:var(--muted);font-size:15px;max-width:710px}.playground-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr);gap:21px;align-items:start}.card{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);padding:22px}.card h2{font-size:18px;margin:0 0 9px}.card p{color:var(--muted);font-size:13px;margin:0 0 13px}.playground-layout .terminal-output{max-height:440px;min-height:280px}.playground-layout .terminal-zone{margin-top:0}.quick-buttons{display:flex;gap:8px;flex-wrap:wrap}.quick-buttons button{padding:7px 9px;border:1px solid #4b5f72;border-radius:7px;background:#26374b;color:#d9e8f8;font:12px ui-monospace,SFMono-Regular,Consolas,monospace}.quick-buttons button:hover{border-color:var(--orange)}
+    .card.note{margin-top:17px}.danger-note{border-left:3px solid #f2a06b;padding:10px 14px;background:#352e31;color:#f3d9c6;border-radius:8px;font-size:12px;margin-top:14px}
+    .guide-tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-bottom:17px}.searchbox{width:min(100%,450px);border:1px solid #455871;background:#18293b;color:var(--text);border-radius:11px;padding:12px 14px;min-height:45px}.guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.guide-card{border:1px solid var(--border);border-radius:13px;background:var(--surface);padding:18px;min-width:0}.guide-card h3{font:750 17px ui-monospace,SFMono-Regular,Consolas,monospace;color:#f8a578;margin:0 0 7px}.guide-card p{color:#c3d1dd;font-size:13px;margin:0 0 10px}.guide-card code{display:block;background:#0b1624;color:#a3edc9;padding:8px 9px;border-radius:7px;font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}.guide-card small{display:block;color:var(--dim);margin-top:10px}.guide-card .tiny{margin-top:10px}.empty{color:var(--muted);padding:22px 0}
+    .reset-link{background:none;border:0;color:var(--muted);text-decoration:underline;font-size:12px;padding:3px 0}.reset-link:hover{color:var(--text)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media (max-width:1060px){.top{flex-wrap:wrap}.topnav{order:3;width:100%;justify-content:space-around}.navbtn{flex:1}.hero{grid-template-columns:minmax(0,1fr) minmax(285px,.75fr)}.lesson-layout{grid-template-columns:250px minmax(0,1fr)}.detail-header,.detail-body{padding-left:19px;padding-right:19px}.guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:760px){.wrap{padding:0 16px 27px}.top{padding:14px 0;gap:12px}.brand-mark{width:42px;height:42px}.brand{min-width:0}.top-prog{margin-left:auto}.hero{grid-template-columns:1fr;margin-top:24px;gap:18px}.hero h1{font-size:clamp(32px,8.4vw,47px);letter-spacing:-1.4px}.hero p{font-size:15px}.hero-art{min-height:0}.art-terminal{min-height:160px}.hero-actions .btn{flex:1}.lesson-layout{grid-template-columns:1fr;gap:14px}.lesson-list{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px;scrollbar-color:#465769 #172437}.lesson-item{flex:0 0 180px;scroll-snap-align:start}.lesson-status{display:none}.progresspanel{flex-wrap:wrap;gap:12px}.progressbar{width:100%;max-width:none}.playground-layout{grid-template-columns:1fr}.guide-grid{grid-template-columns:1fr 1fr}.terminal-head{align-items:flex-start}.terminal-head small{display:none}.detail h2{font-size:25px}.detail-header,.detail-body{padding:19px 16px}.trustrow{gap:9px 18px}.footer{font-size:11px}}
+    @media (max-width:460px){.brand-title{font-size:16px}.brand-sub{font-size:9px;letter-spacing:1px}.top-prog{font-size:12px;gap:6px}.topnav{gap:2px;padding:3px}.navbtn{font-size:11px;padding:9px 4px}.hero h1{font-size:35px}.hero-actions{flex-direction:column;align-items:stretch}.trustrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hero-art{padding:12px}.art-terminal{padding:10px;font-size:11px}.guide-grid{grid-template-columns:1fr}.terminal-form{padding:9px}.terminal-form label{font-size:10px}.terminal-form input{font-size:12px}.run-btn{padding:8px}.card{padding:16px}.quiz-choices{flex-direction:column}.quiz-choices button{width:100%}}
+
+    /* Independent Ubuntu learning lab — responsive vi practice */
+    .vi-zone{margin-top:20px;background:#0b1422;border:1px solid #506377;border-radius:14px;overflow:hidden;min-width:0}
+    .vi-header{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 15px;background:#182638;border-bottom:1px solid #34465a}
+    .vi-header strong{font:750 13px ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}
+    .vi-badge{margin-left:10px;border-radius:5px;background:#324357;padding:3px 7px;color:#e2effa;font:800 10px ui-monospace,SFMono-Regular,Consolas,monospace}
+    .vi-badge.insert{background:#346657;color:#ccfbe5}
+    .vi-tip{color:#afc7d9;font-size:12px;padding:10px 15px;background:#102237;border-bottom:1px solid #34465a}
+    .vi-textarea{display:block;width:100%;min-width:0;min-height:260px;padding:14px 16px;resize:vertical;background:#07101a;color:#edf5fb;border:0;border-radius:0;font:13px/1.75 ui-monospace,SFMono-Regular,Consolas,monospace;outline:0;tab-size:2}
+    .vi-textarea:focus-visible{outline:2px solid var(--orange);outline-offset:-2px}
+    .vi-textarea[readonly]{color:#b5c7d4;cursor:default}
+    .vi-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px 13px;background:#142335;border-top:1px solid #34465a}
+    .vi-toolbar .btn.primary{margin-left:auto}
+    .vi-foot{padding:9px 14px;background:#1c2d3b;color:#9fb1c4;font-size:11px}
+    .terminal-form label{max-width:48%;overflow:hidden;text-overflow:ellipsis}
+    .lesson-list,.detail,.terminal-zone,.vi-zone{min-width:0}
+    @media(max-width:460px){.vi-header{align-items:flex-start}.vi-toolbar .btn.primary{margin-left:0}.vi-toolbar button{flex:1 1 auto}.vi-textarea{font-size:12px}.terminal-form label{max-width:39%}.topnav{min-width:0}.brand{flex:0 1 auto}.top-prog{margin-left:0}.progresspanel{min-width:0}}
+    @media(max-width:350px){.top-prog{font-size:11px}.brand-sub{letter-spacing:.4px}.navbtn{white-space:normal;line-height:1.22;min-height:44px}.terminal-head{flex-wrap:wrap}.top-prog .circle{width:29px;height:29px}.terminal-foot{flex-wrap:wrap}}
+
+    .vi-command-form{display:flex;gap:9px;align-items:center;background:#102036;border-top:1px solid #34465a;padding:8px 13px}
+    .vi-command-form label{font:750 15px ui-monospace,SFMono-Regular,monospace;color:#f6b38a}
+    .vi-command-form input{background:#0a1829;border:1px solid #34465a;color:#e5f3ff;padding:8px 9px;border-radius:7px;flex:1;min-width:0;max-width:230px;font:13px ui-monospace,SFMono-Regular,monospace}
+    .script-example{font:12px/1.6 ui-monospace,SFMono-Regular,monospace;white-space:pre-wrap;overflow-wrap:anywhere;background:#111820;border:1px solid #384d5f;border-radius:8px;padding:10px;color:#a9ecce;margin:8px 0}
+    .install-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 21px;background:#162a35;border:1px solid #335261;border-radius:14px;padding:15px 17px}
+    .install-copy{min-width:0;display:flex;flex-direction:column;gap:3px}.install-copy b{font-size:14px}.install-copy span{font-size:12px;color:#bed1dc}
+    .install-help{border:1px solid #566b7c;border-radius:15px;background:#111d2c;color:var(--text);padding:24px;max-width:min(92vw,440px);box-shadow:0 0 0 100vmax #0008}
+    .install-help::backdrop{background:#000a}.install-help h2{margin:0 0 8px;font-size:21px}.install-help p{color:var(--muted);font-size:14px;margin:0 0 16px}
+    .install-help ol{color:#d7e5ef;font-size:14px;padding-left:23px}.install-help li{margin:8px 0}
+    @media (display-mode:standalone){.install-cta{display:none}}
+    @media(max-width:480px){.install-cta{align-items:flex-start;flex-direction:column;gap:10px}.install-cta .btn{width:100%}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+
+/* Instructor-led course layout */
+.course-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:8px}.course-heading .section-sub{margin-bottom:12px}.course-heading .btn{margin-bottom:12px}
+.unit-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:6px 0 22px}.unit-card{background:#131f2e;border:1px solid #30445b;border-radius:14px;text-align:left;color:var(--text);padding:16px;display:flex;flex-direction:column;gap:9px;min-width:0;min-height:151px}.unit-card:hover{border-color:#e89a6f;background:#1a2938}.unit-card.unit-current{border-color:#ac7656;background:#252836}.unit-n{color:var(--orange2);letter-spacing:1.3px;font-size:10px;font-weight:850;display:flex;justify-content:space-between;gap:8px}.unit-n span{color:#a3bbce;letter-spacing:0;font-weight:600}.unit-card strong{font-size:14px;line-height:1.26}.unit-target{color:var(--muted);font-size:11px;line-height:1.43;flex:1}.unit-meter{height:5px;background:#34465a;width:100%;border-radius:8px;overflow:hidden}.unit-meter span{display:block;height:100%;background:var(--mint)}
+.lesson-list{display:block;padding:8px}.side-unit{border-bottom:1px solid #2c3c50;padding:4px 0 10px}.side-unit:last-child{border-bottom:0}.side-unit-title{padding:12px 9px 8px;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:baseline}.side-unit-title span{font-size:10px;color:var(--orange2);white-space:nowrap;letter-spacing:.6px;font-weight:850}.side-unit-title strong{font-size:11px;line-height:1.25;color:#dae6ee;font-weight:740}.side-unit-title small{font-size:11px;color:var(--dim)}
+.lesson-unit-name{font-size:11px;text-transform:uppercase;letter-spacing:1.6px;color:var(--orange2);font-weight:830;margin:16px 0 0}
+.learning-objective{display:flex;gap:13px;align-items:flex-start;border-radius:12px;background:linear-gradient(130deg,#193b37,#1a3340);border:1px solid #38685c;padding:15px 16px;margin:16px 0;color:#e8f6f2}.learning-objective strong{font-size:13px}.learning-objective p{margin:4px 0 0;font-size:13px;line-height:1.45}.objective-icon{font-size:22px;color:var(--mint);line-height:1}
+.stage-strip{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:17px 0 12px}.stage-pill{font-size:11px;white-space:nowrap;display:flex;align-items:center;gap:5px;color:#b1c4d5;background:#223244;padding:6px 8px;border-radius:8px}.stage-pill span{font-size:10px;border-radius:50%;border:1px solid #587185;min-width:20px;min-height:20px;display:grid;place-items:center}.stage-pill.stage-done{color:#b8f0db;background:#1b433d}.stage-pill.stage-done span{border-color:#4cbfa0;background:#256250;color:#fff}
+.preflight{color:#b6c7d6;font-size:12px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}.preflight>span{color:#e1eaf3;font-weight:700}.inline-link{background:none;border:0;padding:0;color:#bce0ff;text-decoration:underline;font-size:inherit}.review-toggle{margin-left:auto;padding:7px 10px;border:1px solid #51647a;border-radius:8px;background:#1c2b3c;color:#d3e4f1;font-size:11px;min-height:36px}.review-toggle.saved{border-color:#ddb05d;color:#ffe1a5;background:#3b332a}
+.teach-panel{border:1px solid #31445b;background:#131f2e;border-radius:15px;padding:20px;margin-bottom:16px;min-width:0;scroll-margin-top:18px}.teach-panel.soft-locked{border-style:dashed;background:#121d29}.section-kicker{display:flex;align-items:center;gap:9px;color:#e7a37d;font-size:10px;font-weight:860;letter-spacing:1.5px;margin-bottom:10px}.step-label{border-radius:8px;background:#56382f;color:#ffd0aa;display:grid;place-items:center;width:28px;height:27px;font-size:11px;font-weight:870}.teach-panel h3{font-size:18px;letter-spacing:-.3px;margin:0 0 9px}.panel-intro{font-size:13px;color:#c6d7e4;line-height:1.62;margin:0 0 15px}.panel-intro code{color:#ffbb90}.panel-intro strong{color:#ebf3fa;font-weight:700}.micro-hint{font-size:11.5px;color:#94afc4;margin:11px 0}.predict-choices{display:grid;gap:8px}.predict-choice{border:1px solid #445a72;background:#203145;color:#eff8ff;border-radius:10px;text-align:left;padding:11px 13px;display:flex;align-items:center;gap:11px;font-size:13px;min-height:44px}.predict-choice span{display:grid;place-items:center;flex:0 0 25px;width:25px;height:25px;background:#384f63;border-radius:6px;color:#dfeeff;font-weight:850}.predict-choice:hover{border-color:#f5ae85}.predict-choice:disabled{opacity:1;cursor:default}.predict-choice.correct{border-color:#4dab89;background:#1c4c40}.predict-choice.incorrect{border-color:#ac6f62;background:#493b3b}.formative-feedback{margin:12px 0 0;padding:13px 15px;background:#45372e;border-left:3px solid #f1ae75;border-radius:9px}.formative-feedback.good{background:#1f433d;border-color:#59c79f}.formative-feedback strong{color:#ffddb2;font-size:13px}.formative-feedback.good strong{color:#a8f2d1}.formative-feedback p{color:#e4e5dc;margin:4px 0 0;font-size:12px}
+.example-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:11px;margin:12px 0}.code-caption{font-size:10px;letter-spacing:1.2px;font-weight:840;color:#afc5d7;margin:0 0 7px}.teacher-code{padding:13px 15px;border-radius:10px;background:#07131f;border:1px solid #344e68;color:#e4eff7;font:12.5px/1.68 ui-monospace,SFMono-Regular,Consolas,monospace;overflow:auto;min-height:96px;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}.teacher-code.result-code{color:#95ecc8}.teacher-explain{margin:12px 0;font-size:12.5px;color:#cfe1ed;line-height:1.6}.pitfall{border-left:3px solid #dda474;padding:12px 15px;border-radius:8px;background:#332c2d;margin-top:13px}.pitfall strong{font-size:12px;color:#ffd1ae}.pitfall p{font-size:12px;color:#e1cebf;margin:3px 0 11px}.pitfall p:last-child{margin-bottom:0}.terminal-wrap{margin-top:19px}.terminal-wrap .terminal-zone{margin-top:0}.solo-heading{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:9px;margin-bottom:6px}.solo-heading h3{margin:0}.exit-quiz{border:0;background:transparent;padding:0;margin:0}.exit-quiz h4{margin:0 0 9px;font-size:16px}.quiz-choices button{min-height:41px}.vm-panel{background:#192f39;border-color:#39636c}.vm-panel p{color:#d5e5ea;font-size:13px}.vm-warning{border-left:3px solid #ebb08a;background:#352e30;padding:10px 13px;border-radius:8px;color:#f3d4c4;font-size:12px}.notes-panel textarea{width:100%;background:#0c1825;border:1px solid #465f72;color:var(--text);border-radius:10px;padding:12px 13px;resize:vertical;font:13px/1.6 inherit;min-height:100px}.note-label{font-size:12px;color:var(--muted);display:block;margin:0 0 10px}.notes-panel textarea:focus{outline:2px solid var(--orange2);outline-offset:2px}
+.review-overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:28px}.review-overview .card{padding:19px;display:flex;flex-direction:column;gap:7px}.review-overview strong{font-size:26px;letter-spacing:-.5px;color:var(--orange2)}.review-overview span{font-size:12px;color:#aabecf}.review-list{display:grid;gap:10px}.review-card{background:#142337;border:1px solid #344a61;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px}.review-card strong{font-size:15px}.review-card p{font-size:12px;color:var(--muted);margin:4px 0 0}.review-card .review-note{margin-top:8px;color:#bdf3da;overflow-wrap:anywhere}.review-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap;flex-shrink:0}.empty-review{background:#142536;border-radius:15px;border:1px dashed #50657b;padding:34px 22px;text-align:center}.empty-review strong{font-size:18px}.empty-review p{color:var(--muted);font-size:13px}.empty-review .btn{margin-top:5px}
+@media(max-width:1020px){.unit-map{grid-template-columns:repeat(2,minmax(0,1fr))}.side-unit-title{grid-template-columns:1fr auto}.side-unit-title span{display:none}}
+@media(max-width:760px){.lesson-list{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px;gap:10px}.side-unit{flex:0 0 280px;border-bottom:0;border-right:1px solid var(--border);padding-right:8px;scroll-snap-align:start}.side-unit-title{display:flex;flex-wrap:wrap;gap:7px}.side-unit-title span{display:inline}.lesson-item{width:100%;min-width:0;flex:none}.unit-map{grid-template-columns:repeat(2,minmax(0,1fr))}.preflight{align-items:start}.review-toggle{margin-left:0}.stage-strip{gap:5px}.stage-pill{font-size:10px;padding:5px 6px}.teach-panel{padding:16px 14px}.example-grid{grid-template-columns:1fr}.review-card{align-items:flex-start;flex-direction:column}.review-overview .card{padding:12px}.review-overview strong{font-size:23px}}
+@media(max-width:460px){.unit-map{grid-template-columns:1fr}.unit-card{min-height:128px}.topnav .navbtn{font-size:10px;padding:10px 3px}.review-overview{gap:6px}.review-overview strong{font-size:19px}.review-overview span{font-size:10px}.stage-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}.stage-pill{flex-direction:column;justify-content:center;gap:3px;text-align:center;white-space:normal;font-size:9px;padding:8px 3px;line-height:1.12}.stage-pill span{min-width:22px}.teach-panel h3{font-size:16px}.teacher-code{font-size:11.5px;padding:11px}.lesson-unit-name{margin-top:12px}}
+
+
+.prior-credit{background:#383428;border-left:3px solid #f0b77a;border-radius:8px;padding:10px 12px;font-size:12px;color:#f5dfc0}
+.mobile-lesson-picker{display:none}
+@media(max-width:760px){
+  .unit-map{display:flex;overflow-x:auto;flex-wrap:nowrap;gap:11px;scroll-snap-type:x mandatory;padding-bottom:9px;scrollbar-color:#495e70 #101e2b}
+  .unit-card{flex:0 0 225px;width:225px;scroll-snap-align:start;min-height:145px}
+  .lesson-list{display:none}
+  .mobile-lesson-picker{display:flex;flex-direction:column;gap:7px;background:#172638;border:1px solid #3f5168;border-radius:12px;padding:14px;margin:0 0 14px}
+  .mobile-lesson-picker label{font-size:12px;font-weight:750;color:#cddde9}
+  .mobile-lesson-picker select{background:#0c1724;border:1px solid #60718a;border-radius:10px;color:#eef4fb;min-height:43px;padding:10px;max-width:100%;font:13px system-ui}
+  .mobile-lesson-picker select:focus-visible{outline:3px solid #ffa468;outline-offset:2px}
+}
+
+.lesson-jump{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 15px}
+.lesson-jump a{font-size:11px;color:#d5eaff;border:1px solid #4c6480;padding:5px 9px;background:#243448;border-radius:8px;text-decoration:none}
+.lesson-jump a:hover{border-color:#f2a67e;background:#354152}
+
+/* On-the-job case studies */
+.scenario-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:10px 0 20px}.scenario-card{background:#121f2f;border:1px solid #354a61;border-radius:15px;padding:19px;text-align:left;display:flex;flex-direction:column;align-items:stretch;gap:9px;color:var(--text);min-width:0;min-height:155px}.scenario-card:hover{border-color:#f0a577;background:#1c2c3d}.scenario-card.selected{border-color:#e89466;background:#292a31;box-shadow:inset 0 0 0 1px #e8946630}.scenario-card-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.scenario-card strong{font-size:16px;line-height:1.27}.scenario-card>span{font-size:12px;color:var(--muted)}.scenario-card-progress{font-weight:850;color:#d6b090;font-size:12px}.text-success{color:var(--mint);font-weight:850}
+.scenario-ticket{background:linear-gradient(115deg,#193340,#191f31);border:1px solid #486171;border-radius:18px;padding:24px;margin:0 0 19px;scroll-margin-top:12px}.scenario-ticket-head{display:flex;justify-content:space-between;align-items:center;gap:9px;flex-wrap:wrap}.scenario-ticket-head>div{display:flex;flex-wrap:wrap;gap:8px}.scenario-ticket h2{font-size:clamp(24px,2.5vw,35px);margin:17px 0 9px;letter-spacing:-.6px;line-height:1.15}.scenario-role{font-size:13px;color:#c9dce8}.scenario-context{font-size:15px;max-width:950px;line-height:1.62;color:#d9e5ee}.scenario-callout{border:1px solid #436f67;background:#163d3c;padding:16px 19px;border-radius:12px;margin:17px 0 12px}.scenario-callout strong{color:#adf3d7;font-size:13px}.scenario-callout p{margin:5px 0 0;color:#e1f4eb;font-size:14px}.scenario-evidence{color:#b9d2e0;font-size:12.5px;margin:0}
+.scenario-workspace{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(260px,.85fr);align-items:start;gap:19px}.scenario-main{min-width:0}.scenario-action-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;margin:3px 0 12px}.scenario-action-heading h2{margin:0;font-size:20px}.scenario-action-heading span{font-size:12px;color:var(--muted)}.scenario-console{border:1px solid #405773;background:#091522;border-radius:14px;overflow:hidden}.scenario-log{padding:15px 17px;min-height:265px;max-height:410px;overflow:auto;color:#d5e5f0;font:12.5px/1.68 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;scrollbar-color:#516a81 #0a1622}.scenario-log .line{white-space:pre-wrap;overflow-wrap:anywhere;margin:2px 0}.scenario-log .input{color:#fff}.scenario-log .ps1{color:#85eabf}.scenario-log .error{color:#ffaca6}.scenario-log .success{color:#a1f9c6}.scenario-log .system{color:#a2bad0}.scenario-form{display:flex;gap:8px;align-items:center;padding:11px 13px;border-top:1px solid #284157}.scenario-form:focus-within{box-shadow:inset 0 -2px var(--orange)}.scenario-form label{font:12px ui-monospace,SFMono-Regular,Consolas,monospace;color:#7cdcb3;white-space:nowrap}.scenario-form input{border:0;outline:0;min-width:0;flex:1;background:transparent;color:#eef6fc;font:12.5px ui-monospace,SFMono-Regular,Consolas,monospace;padding:7px 3px}.scenario-form input:focus-visible{outline:0}.scenario-shortcuts{background:#142335;border:1px solid #334861;border-radius:13px;margin:13px 0 20px;padding:15px}.scenario-shortcuts b{display:block;font-size:12px;margin-bottom:10px;color:#c6dcf0}.scenario-shortcuts>div{display:flex;gap:8px;flex-wrap:wrap}.scenario-shortcuts .tiny{font:11.5px ui-monospace,SFMono-Regular,Consolas,monospace;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:left}
+.scenario-side{display:grid;gap:13px}.scenario-goals,.scenario-coach{background:#172537;border:1px solid #394f65;border-radius:14px;padding:19px}.scenario-goals h3,.scenario-coach h3{margin:0 0 6px;font-size:16px}.scenario-goals>p,.scenario-coach>p{font-size:12px;color:#abc3d6;margin:0 0 16px}.scenario-goal{display:flex;align-items:flex-start;gap:11px;padding:10px 0;border-top:1px solid #2a3f54;font-size:12.5px;line-height:1.4}.goal-yes{color:#91f0be;font-weight:900}.goal-open{color:#859fb4;font-weight:850}.scenario-score{height:7px;background:#334759;border-radius:30px;margin:14px 0 9px;overflow:hidden}.scenario-score span{display:block;background:linear-gradient(90deg,#e17f57,#7bd8ad);height:100%;border-radius:30px}.scenario-done{color:#9df3cc!important;font-weight:740}.scenario-pending{color:#a8c0d4;font-size:12px;margin:0}.scenario-coach .btn{width:100%}.scenario-coach-tip{margin-top:13px;padding:12px 13px;background:#34312f;border:1px solid #765648;border-radius:10px}.scenario-coach-tip strong{color:#ffd0a5;font-size:11px}.scenario-coach-tip p{color:#edd5c0;margin:6px 0 0;font-size:12px;line-height:1.5}
+.scenario-editor-card{background:#152335;border:1px solid #40556a;border-radius:14px;padding:17px;margin-bottom:15px}.scenario-editor-title{display:flex;justify-content:space-between;gap:10px;align-items:start;flex-wrap:wrap}.scenario-editor-title h3{font-size:16px;margin:0 0 3px}.scenario-editor-title p{color:#bed0df;font-size:12px;margin:0 0 12px}.scenario-editor-card textarea{width:100%;border-radius:10px;border:1px solid #44617a;background:#091622;color:#dff3eb;font:12.5px/1.63 ui-monospace,SFMono-Regular,Consolas,monospace;padding:13px;tab-size:2;resize:vertical;min-height:215px}.scenario-editor-card textarea:focus-visible{outline:2px solid var(--orange2)}.scenario-editor-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:9px;font-size:11px;color:#a7bdd0}.scenario-test-feedback{border-left:3px solid #e89e78;background:#332e30;border-radius:7px;font-size:11.5px;margin-top:11px;padding:9px 12px;color:#f0d5bb}
+.scenario-debrief{border:1px solid #408a72;border-radius:15px;background:linear-gradient(125deg,#1c4b42,#152936);padding:23px 25px;margin-top:18px}.scenario-debrief h2{margin:9px 0;font-size:22px}.scenario-debrief p{color:#daeee7;font-size:14px;line-height:1.57}.scenario-next{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}.scenario-practice-note{background:#302d32;border:1px solid #715a54;border-radius:12px;padding:15px 18px;color:#f2d7c4;font-size:12.5px;margin-top:15px}
+@media(max-width:940px){.scenario-workspace{grid-template-columns:1fr}.scenario-side{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.scenario-list{grid-template-columns:1fr 1fr}.scenario-form label{font-size:11px}.scenario-ticket{padding:18px}}
+@media(max-width:510px){.scenario-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px}.scenario-form label{grid-column:1/-1}.scenario-form input{grid-column:1;flex:auto;width:100%;min-height:37px}.scenario-form .run-btn{grid-column:2}.scenario-list{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px}.scenario-card{flex:0 0 235px;min-height:149px;scroll-snap-align:start}.scenario-side{grid-template-columns:1fr}.scenario-console .terminal-head small{display:none}.scenario-log{min-height:240px}.scenario-form{flex-wrap:wrap;gap:5px}.scenario-form label{font-size:11px}.scenario-form input{flex:1 1 125px}.scenario-ticket h2{font-size:25px}.topnav{flex-wrap:wrap}.topnav .navbtn{flex:1 0 29%;font-size:11px;padding:8px 5px}.scenario-action-heading h2{font-size:19px}}
+
+  </style>
+</head>
+<body>
+<a href="#main" class="skip">Skip to content</a>
+<div id="app"></div>
+<script>
+'use strict';
+const HOME='/home/student';
+const STORAGE='teachMeLinux_instructor_course_v1';
+const lessons=[
+  {title:'Hello, Ubuntu',short:'Meet Linux & the terminal',time:'4 min',level:'START HERE',subtitle:'Get comfortable with the window that lets you talk to Linux.',concept:'Linux is the operating-system kernel. <strong>Ubuntu is a Linux distribution</strong> built around it. The Terminal runs text commands through a shell.',takeaway:'First, learn where you are and who you are.',steps:[
+    {text:'Ask Linux which folder you are in.',note:'Print your working directory.',hint:'pwd'},
+    {text:'Find out your current username.',note:'Who is signed in?',hint:'whoami'},
+    {text:'Find the name of the system kernel.',note:'The kernel name should be Linux.',hint:'uname -s'}
+  ],quiz:{q:'What is Ubuntu?',options:['A Linux distribution','A programming language','A type of computer keyboard'],correct:0,why:'Ubuntu is a distribution that includes Linux plus system tools and applications.'}},
+  {title:'Find your way',short:'Move through folders',time:'5 min',level:'NAVIGATION',subtitle:'Explore your files without needing to click through folders.',concept:'The <code>pwd</code> command tells you where you are, <code>ls</code> lists what is there, and <code>cd</code> changes your current directory.',takeaway:'Paths are case-sensitive: Documents and documents are different.',steps:[
+    {text:'See what is inside your home folder.',note:'List the files and folders here.',hint:'ls'},
+    {text:'Enter the Documents folder.',note:'Use the folder name exactly as shown.',hint:'cd Documents'},
+    {text:'Confirm that you moved into Documents.',note:'Print your current location.',hint:'pwd'}
+  ],quiz:{q:'Which command prints your current folder?',options:['mkdir','pwd','cp'],correct:1,why:'pwd stands for print working directory.'}},
+  {title:'Create files & folders',short:'Build your workspace',time:'5 min',level:'FILES',subtitle:'Create a project folder and put a new file inside it.',concept:'Use <code>mkdir</code> to make a directory (folder), and <code>touch</code> to create an empty file or update a file timestamp.',takeaway:'You can use a path to create a file inside a folder.',steps:[
+    {text:'Go into Documents.',note:'Your practice folder lives there.',hint:'cd Documents'},
+    {text:'Create a folder named LinuxLab.',note:'Keep the same capital letters.',hint:'mkdir LinuxLab'},
+    {text:'Create notes.txt inside LinuxLab.',note:'Use a relative path.',hint:'touch LinuxLab/notes.txt'}
+  ],quiz:{q:'What does mkdir LinuxLab do?',options:['Deletes a folder','Creates a folder named LinuxLab','Shows the current folder'],correct:1,why:'mkdir stands for make directory.'}},
+  {title:'Copy & rename',short:'Organize your work',time:'5 min',level:'FILES',subtitle:'Practice changing filenames without losing the original.',concept:'<code>cp</code> copies a file. <code>mv</code> moves a file to a new location or renames it. They are different operations.',takeaway:'Copy first, rename the copy, and check your results.',steps:[
+    {text:'Go into Documents.',note:'There is a sample file waiting for you.',hint:'cd Documents'},
+    {text:'Copy hello.txt to copy.txt.',note:'The original should remain.',hint:'cp hello.txt copy.txt'},
+    {text:'Rename copy.txt to final.txt.',note:'Use the move command.',hint:'mv copy.txt final.txt'}
+  ],quiz:{q:'Which command renames an existing file?',options:['ls','mv','whoami'],correct:1,why:'mv can move or rename files; cp creates a copy.'}},
+  {title:'Read & search',short:'Find useful information',time:'5 min',level:'TEXT',subtitle:'View files, search their contents, and reveal hidden files.',concept:'<code>cat</code> prints a file’s contents. <code>grep</code> searches for matching text. <code>ls -a</code> includes hidden files, which start with a dot.',takeaway:'Linux tools are especially useful for finding information quickly.',steps:[
+    {text:'Read welcome.txt in your home folder.',note:'Look at the sample message.',hint:'cat welcome.txt'},
+    {text:'Find the line containing Ubuntu in welcome.txt.',note:'Text matching is case-sensitive by default.',hint:'grep Ubuntu welcome.txt'},
+    {text:'Reveal hidden files in your home folder.',note:'The -a option shows more than ls alone.',hint:'ls -a'}
+  ],quiz:{q:'What is grep useful for?',options:['Searching for text','Installing applications','Renaming files'],correct:0,why:'grep finds lines matching a pattern.'}},
+  {title:'Permissions 101',short:'Understand access rights',time:'5 min',level:'SECURITY',subtitle:'Find out who can read, write, and run a file.',concept:'In <code>ls -l</code>, the letters <code>r</code>, <code>w</code>, and <code>x</code> describe read, write, and execute permissions. <code>chmod +x</code> adds execute permission.',takeaway:'Do not run unfamiliar scripts simply because they are executable.',steps:[
+    {text:'Go into Documents.',note:'You will inspect a harmless sample script.',hint:'cd Documents'},
+    {text:'Inspect the permissions of setup.sh.',note:'Use the long listing format.',hint:'ls -l setup.sh'},
+    {text:'Add execute permission to setup.sh.',note:'This only changes your simulated file.',hint:'chmod +x setup.sh'}
+  ],quiz:{q:'What does chmod +x usually add?',options:['Delete permission','Execute permission','A new user account'],correct:1,why:'The x stands for execute. Permissions still need careful handling.'}},
+  {title:'Ubuntu software',short:'Meet apt and sudo',time:'6 min',level:'UBUNTU',subtitle:'Understand how Ubuntu can find and install software.',concept:'Ubuntu uses the <code>apt</code> package manager. <code>sudo</code> runs an approved command with administrative privileges. Review commands before using sudo on a real computer.',takeaway:'Everything here is simulated: no program will be installed.',steps:[
+    {text:'Search the demo catalog for nano.',note:'Search does not install software.',hint:'apt search nano'},
+    {text:'Refresh the demo package list.',note:'On a real Ubuntu machine, this usually needs administrator permission.',hint:'sudo apt update'},
+    {text:'Install nano in this simulated workspace.',note:'Nothing is installed on your actual device.',hint:'sudo apt install nano'}
+  ],quiz:{q:'What is an important thing to know about sudo?',options:['It lists files','It grants elevated privileges for a command','It always makes a command safe'],correct:1,why:'sudo can give commands powerful access, so use it carefully.'}},
+  {title:'Linux project challenge',short:'Put your skills together',time:'7 min',level:'CAPSTONE',subtitle:'Create a new project, make notes, and check your results.',concept:'A few simple commands can form a complete workflow. This mission checks that you can create a folder, enter it, create a file, write text, and read it back.',takeaway:'Finish this mission to complete your Ubuntu starter path.',steps:[
+    {text:'Create a new folder named linux-project.',note:'Start in your home folder.',hint:'mkdir linux-project'},
+    {text:'Go into linux-project.',note:'Work inside the folder you just made.',hint:'cd linux-project'},
+    {text:'Create a file named notes.txt.',note:'Your project needs a note file.',hint:'touch notes.txt'},
+    {text:'Write Learning Linux into notes.txt.',note:'Use output redirection to put text in the file.',hint:'echo Learning Linux > notes.txt'},
+    {text:'Read the text back from notes.txt.',note:'Make sure the file contains what you wrote.',hint:'cat notes.txt'}
+  ],quiz:{q:'What does > do in echo Hello > notes.txt?',options:['Sends text into the file, replacing its contents','Searches the file','Moves to a parent folder'],correct:0,why:'The > operator redirects output to a file, overwriting it if it exists.'}}
+
+  ,{title:'Ubuntu in a virtual machine',short:'Understand host vs. guest',time:'5 min',level:'DESKTOP & VM',subtitle:'Learn where Ubuntu runs when it is launched inside virtualization software.',concept:'A <strong>virtual machine (VM)</strong> is a computer simulated by software. Your regular computer is the <strong>host</strong>; Ubuntu is the <strong>guest operating system</strong>. The guest has its own desktop, filesystem, and terminal.',takeaway:'Practice commands inside the Ubuntu VM, not the host computer. Our web lab is a command simulator, not a VM.',steps:[
+    {text:'Identify the simulated guest kernel.',note:'Linux should appear as the kernel.',hint:'uname -s'},
+    {text:'Inspect the demo Ubuntu release metadata.',note:'Ubuntu identifies itself in /etc/os-release.',hint:'cat /etc/os-release'},
+    {text:'Locate your home directory.',note:'You should see /home/student.',hint:'pwd'}
+  ],quiz:{q:'In an Ubuntu virtual machine, what does “guest” mean?',options:['The operating system running inside the VM','Your computer’s physical keyboard','The computer that hosts the VM'],correct:0,why:'The guest is the OS inside a virtual machine; the host runs the virtualization software.'}},
+  {title:'Edit with vi',short:'Normal mode & insert mode',time:'8 min',level:'VI EDITOR',subtitle:'Edit a real-looking shell script using an interactive, simplified vi practice editor.',concept:'In <code>vi</code>, <strong>Normal mode</strong> handles commands and <strong>Insert mode</strong> edits text. Press <code>i</code> to insert, <code>Esc</code> to return to Normal, and <code>:wq</code> to save and quit.',takeaway:'This editor teaches vi modes and saving. It is not a complete Vim implementation.',steps:[
+    {text:'Open hello.sh with vi.',note:'The editor will open in Normal mode.',hint:'vi hello.sh'},
+    {text:'Insert a shebang and an echo statement; then save and quit.',note:'Enter #!/bin/bash on line 1 and echo Hello from vi on line 2. Use i, Esc and :wq.',hint:'#!/bin/bash\necho Hello from vi'},
+    {text:'Run the script using Bash.',note:'You should see Hello from vi.',hint:'bash hello.sh'}
+  ],quiz:{q:'Which keys save and exit vi from Normal mode?',options:[':wq followed by Enter','Ctrl+C','i followed by Enter'],correct:0,why:':wq writes the file and quits; pressing Esc first ensures you are back in Normal mode.'}},
+  {title:'Variables & shell scripts',short:'Create a reusable Bash script',time:'8 min',level:'BASH',subtitle:'Store data in a variable and use it inside a command.',concept:'In Bash, set a variable with <code>name="Linux"</code> (no spaces around <code>=</code>). Read the variable with <code>$name</code>. A script often begins with <code>#!/bin/bash</code>.',takeaway:'<code>bash script.sh</code> explicitly runs the script with Bash; it does not require execute permission.',steps:[
+    {text:'Open greet.sh in vi.',note:'Make a script with a variable.',hint:'vi greet.sh'},
+    {text:'Write a variable assignment and a message; save.',note:'Use name="Linux" and echo "Hello $name" on separate lines.',hint:'#!/bin/bash\nname="Linux"\necho "Hello $name"'},
+    {text:'Run greet.sh with Bash.',note:'The output should be Hello Linux.',hint:'bash greet.sh'}
+  ],quiz:{q:'How do you read a Bash variable named name?',options:['$name','%name','name()'],correct:0,why:'The $ prefix expands a variable’s value in Bash.'}},
+  {title:'For loops',short:'Repeat a command for each item',time:'9 min',level:'BASH LOOPS',subtitle:'Write a loop that prints three numbered items.',concept:'A <code>for</code> loop repeats commands for each item in a list. In Bash, a common pattern is <code>for n in 1 2 3; do ...; done</code>.',takeaway:'Use variables like <code>$n</code> inside the loop to refer to the current item.',steps:[
+    {text:'Open for-loop.sh in vi.',note:'Create your loop script.',hint:'vi for-loop.sh'},
+    {text:'Create a for loop that prints Item 1, Item 2, Item 3; save.',note:'Use a for n in 1 2 3 loop, echo "Item $n" and done.',hint:'#!/bin/bash\nfor n in 1 2 3; do\n  echo "Item $n"\ndone'},
+    {text:'Run your for loop.',note:'Check that three lines are printed.',hint:'bash for-loop.sh'}
+  ],quiz:{q:'Which keyword ends a Bash for loop?',options:['done','endfor','stop'],correct:0,why:'Bash for and while loops end with done.'}},
+  {title:'While loops',short:'Repeat while a condition is true',time:'9 min',level:'BASH LOOPS',subtitle:'Count from one to three and stop at the right time.',concept:'A <code>while</code> loop repeats while its condition remains true. <code>-le</code> means “less than or equal to”. Update the counter or the loop may never end.',takeaway:'A running loop must eventually reach its stopping condition.',steps:[
+    {text:'Open while-loop.sh in vi.',note:'Write the counter loop.',hint:'vi while-loop.sh'},
+    {text:'Add a counter, while condition, and increment; save.',note:'Set count=1, repeat while $count -le 3, and increment count.',hint:'#!/bin/bash\ncount=1\nwhile [ "$count" -le 3 ]; do\n  echo "Count: $count"\n  count=$((count+1))\ndone'},
+    {text:'Run your while loop.',note:'Expect Count: 1 through Count: 3.',hint:'bash while-loop.sh'}
+  ],quiz:{q:'Why does count=$((count+1)) matter?',options:['It helps the loop eventually stop','It exits the terminal','It installs Bash'],correct:0,why:'The increment changes the counter so the while condition eventually becomes false.'}},
+  {title:'Case statements',short:'Choose between several actions',time:'10 min',level:'BASH CASE',subtitle:'Build a simple text menu using a Bash case statement.',concept:'A <code>case</code> statement compares a value against patterns. Use <code>pattern)</code> for a branch, <code>;;</code> to end the branch, and <code>esac</code> to end the statement.',takeaway:'The <code>*)</code> branch is a helpful fallback for unrecognized values.',steps:[
+    {text:'Open menu.sh in vi.',note:'You will create a three-branch menu.',hint:'vi menu.sh'},
+    {text:'Write a case statement for start, stop and fallback; save.',note:'Set choice="start" and print Starting for the start branch.',hint:'#!/bin/bash\nchoice="start"\ncase "$choice" in\n  start) echo "Starting" ;;\n  stop) echo "Stopping" ;;\n  *) echo "Unknown option" ;;\nesac'},
+    {text:'Run menu.sh.',note:'Expect Starting.',hint:'bash menu.sh'}
+  ],quiz:{q:'Which keyword closes a Bash case statement?',options:['esac','done','fi'],correct:0,why:'Bash closes case with esac, the reverse of case.'}},
+  {title:'If / else conditions',short:'Make a decision in Bash',time:'9 min',level:'BASH LOGIC',subtitle:'Write a script that reacts to a simulated service status.',concept:'Use <code>if [ "$status" = "online" ]; then</code> to test a string. An optional <code>else</code> gives a fallback, and <code>fi</code> closes the condition.',takeaway:'Spaces are important around <code>[</code>, <code>]</code> and <code>=</code> in a test.',steps:[
+    {text:'Open status.sh in vi.',note:'Create a conditional shell script.',hint:'vi status.sh'},
+    {text:'Create an if / else test for online status; save.',note:'Set status="online" and print Service is online when it matches.',hint:'#!/bin/bash\nstatus="online"\nif [ "$status" = "online" ]; then\n  echo "Service is online"\nelse\n  echo "Service is offline"\nfi'},
+    {text:'Run status.sh.',note:'Expect Service is online.',hint:'bash status.sh'}
+  ],quiz:{q:'Which keyword ends a Bash if statement?',options:['fi','done','esac'],correct:0,why:'The Bash if statement ends with fi.'}},
+  {title:'System health basics',short:'Inspect processes & resources',time:'7 min',level:'ADMINISTRATION',subtitle:'Get familiar with process listings and disk and memory usage.',concept:'A system administrator often uses <code>ps</code> to list processes, <code>df -h</code> for disk free space, and <code>free -h</code> for memory. These values here are <strong>fictional demo data</strong>.',takeaway:'On a real Ubuntu VM these commands report the guest system, not necessarily the host.',steps:[
+    {text:'List the simulated running processes.',note:'Check the PID and command columns.',hint:'ps'},
+    {text:'Check simulated disk space.',note:'The -h option makes numbers easier to read.',hint:'df -h'},
+    {text:'Inspect simulated memory usage.',note:'Look at the available memory column.',hint:'free -h'}
+  ],quiz:{q:'What does ps show?',options:['Running processes','Disk partitions only','Installed package updates'],correct:0,why:'ps reports information about processes. This app’s output is a simulation.'}}
+
+  ,{title:'Single & double quotes',short:'Understand how Bash expands text',time:'8 min',level:'BASH QUOTING',subtitle:'Compare literal single-quoted text with double-quoted variable expansion.',concept:'In Bash, <code>\'$name\'</code> leaves the dollar sign literally in the text, while <code>"$name"</code> expands the variable. Quoting changes how the shell interprets what you type.',takeaway:'Single quotes protect literal characters. Double quotes usually allow variable substitution.',steps:[
+    {text:'Open quotes.sh in vi.',note:'Create a script with two echo statements.',hint:'vi quotes.sh'},
+    {text:'Write a variable and both kinds of quotes; save.',note:'The first line of output should be $name, the second Hello Linux.',hint:"#!/bin/bash\nname=\"Linux\"\necho '$name'\necho \"Hello $name\""},
+    {text:'Run your quotation script.',note:'Compare the output carefully.',hint:'bash quotes.sh'}
+  ],quiz:{q:'Which quote style prevents $name from expanding in Bash?',options:['Single quotes','Double quotes','No quotes ever'],correct:0,why:'Single quotes preserve the dollar sign and name literally.'}},
+  {title:'Until loops',short:'Repeat until a condition is true',time:'9 min',level:'BASH LOOPS',subtitle:'Build a loop that stops once a counter reaches a target.',concept:'An <code>until</code> loop is the opposite of <code>while</code>: it repeats while its condition is <strong>false</strong>, and ends once that condition becomes true.',takeaway:'Update the counter inside the loop to avoid an infinite loop.',steps:[
+    {text:'Open until-loop.sh in vi.',note:'Create a safe three-step counting script.',hint:'vi until-loop.sh'},
+    {text:'Write an until loop that prints Count: 1 through 3; save.',note:'Stop the loop once count is greater than 3.',hint:'#!/bin/bash\ncount=1\nuntil [ "$count" -gt 3 ]; do\n  echo "Count: $count"\n  count=$((count+1))\ndone'},
+    {text:'Run the until loop.',note:'Expect three lines, then a normal exit.',hint:'bash until-loop.sh'}
+  ],quiz:{q:'An until loop repeats while its test is…',options:['True','False','Missing'],correct:1,why:'An until loop continues until its condition becomes true.'}},
+  {title:'SSH connection basics',short:'Understand remote access',time:'6 min',level:'SECURE NETWORKING',subtitle:'Learn the shape of a remote connection before using a real server.',concept:'<strong>SSH</strong> (Secure Shell) is an encrypted way to connect to a remote computer. A command such as <code>ssh user@host</code> identifies the username and remote host.',takeaway:'This simulator demonstrates the command but cannot make network connections.',steps:[
+    {text:'Check the simulated SSH client version.',note:'The version shown here is illustrative.',hint:'ssh -V'},
+    {text:'Look up the SSH command reference.',note:'Read the example syntax and security note.',hint:'man ssh'},
+    {text:'Try connecting to a simulated practice hostname.',note:'No network traffic is sent.',hint:'ssh student@lab.example'}
+  ],quiz:{q:'What does SSH primarily enable?',options:['A secure remote terminal connection','Automatic computer upgrades','Deleting local files'],correct:0,why:'SSH is used for encrypted remote access and related operations.'}},
+  {title:'Linux user accounts',short:'Understand users and privileges',time:'7 min',level:'USER MANAGEMENT',subtitle:'Practice examining and creating a sample Linux account.',concept:'Linux associates processes and files with users and groups. <code>id</code> prints identity information. Administrators can add users with tools such as <code>useradd</code>.',takeaway:'The examples run in a fake user database, not your computer.',steps:[
+    {text:'Display the current simulated user identity.',note:'Look for uid, gid and group names.',hint:'id'},
+    {text:'Create a demo account named trainee.',note:'This creates a simulated user only.',hint:'sudo useradd trainee'},
+    {text:'Inspect the trainee account.',note:'Confirm the account exists in the lab.',hint:'id trainee'}
+  ],quiz:{q:'What is a Linux group commonly used for?',options:['Organizing access permissions','Changing screen brightness','Installing keyboards'],correct:0,why:'Groups can be used to grant shared access to resources.'}},
+  {title:'Apache & LAMP basics',short:'Understand a local web server',time:'9 min',level:'WEB SERVER',subtitle:'Install, start, and inspect a simulated Apache web server.',concept:'<strong>LAMP</strong> usually means Linux, Apache, MySQL/MariaDB, and PHP. Apache serves HTTP requests; the database and PHP provide common additional pieces of a web application stack.',takeaway:'This lab simulates Apache package and service commands only; it does not run a real web server or a full LAMP stack.',steps:[
+    {text:'Install the Apache package in the virtual lab.',note:'No real package is installed.',hint:'sudo apt install apache2'},
+    {text:'Start the simulated Apache service.',note:'A running service can respond to local requests.',hint:'sudo systemctl start apache2'},
+    {text:'Check whether Apache is active.',note:'Look for the active status.',hint:'systemctl is-active apache2'},
+    {text:'Request a demonstration localhost page.',note:'Nothing is fetched from the internet.',hint:'curl http://localhost'}
+  ],quiz:{q:'Which is a correct meaning of LAMP?',options:['Linux, Apache, MySQL/MariaDB, PHP','Linux, Android, Mac, Python','Local Apps and Music Playback'],correct:0,why:'LAMP is a common open-source web application stack.'}}
+  ,{title:'Final project: Support Toolkit',short:'Build, test & revise a script',time:'16 min',level:'FINAL PROJECT',subtitle:'Apply terminal navigation, vi editing, case logic, and system observation in one practical assignment.',concept:'A useful Linux support toolkit combines <code>case</code> decisions with system inspection. A final task should prove you can <strong>create, explain, test, and revise</strong> a script.',takeaway:'The project runs in a safe browser simulation; use your own VM for the real-world extension.',steps:[
+    {text:'Create a project folder named support-toolkit.',note:'Start from your home directory.',hint:'mkdir support-toolkit'},
+    {text:'Change into support-toolkit.',note:'Keep your project files together.',hint:'cd support-toolkit'},
+    {text:'Open report.sh using vi.',note:'You will write a short case-based script.',hint:'vi report.sh'},
+    {text:'Write and save the support report script.',note:'Use Insert mode, then Esc and :wq.',hint:'#!/bin/bash\nservice="apache2"\ncase "$service" in\n  apache2) echo "Checking Apache2" ;;\n  *) echo "Unknown service" ;;\nesac'},
+    {text:'Execute report.sh and verify it reports Checking Apache2.',note:'Test what your script actually does.',hint:'bash report.sh'},
+    {text:'Inspect the sample process list.',note:'Report which processes are visible.',hint:'ps'},
+    {text:'Inspect the sample filesystem space.',note:'Get the human-readable disk usage report.',hint:'df -h'}
+  ],quiz:{q:'Why test a script after saving it?',options:['To make its permissions public','To check the output and spot logic errors','To rename its directory'],correct:1,why:'A successful save does not guarantee correct behavior. Test the output and revise as needed.'}}
+
+];
+const courseUnits=[{"title":"Meet your Linux environment","short":"Start here","goal":"Distinguish Linux, Ubuntu, and the computer running the VM.","ids":[0,8]},{"title":"Work confidently in the terminal","short":"Files and tools","goal":"Navigate, manage, inspect, and protect files.","ids":[1,2,3,4,5,6,7]},{"title":"Write your first Bash scripts","short":"Text editing and data","goal":"Use vi and variables to build simple reusable scripts.","ids":[9,10,16]},{"title":"Make scripts think and repeat","short":"Control flow","goal":"Design loops, menus, and conditional decisions.","ids":[11,12,17,13,14]},{"title":"Operate a Linux system","short":"Administration","goal":"Inspect processes, identify users, and understand secure remote access and services.","ids":[15,19,18,20]},{"title":"Final performance task","short":"Put it together","goal":"Create, test, change, and explain your own support toolkit.","ids":[21]}];
+const lessonOrder=courseUnits.flatMap(unit=>unit.ids);
+const teaching={"0":{"objective":"Tell the difference between Linux, Ubuntu, and the shell, then identify your user and kernel.","why":"Before you manage a computer, you need to know what system you are actually controlling.","example":"whoami\nuname -s","output":"student\nLinux","explain":"whoami identifies the user; uname -s reports the kernel name. Ubuntu adds tools and applications around Linux.","predict":"If uname -s prints Linux, what does it identify?","answers":["Your username","The kernel name","The file browser"],"correct":1,"predictionWhy":"Linux is the kernel. The operating system distribution includes much more.","mistake":"Calling Ubuntu a programming language.","repair":"Ubuntu is a Linux distribution; Bash is one scripting language/shell commonly available.","solo":"Use another command to list your home directory.","soloHint":"You can list files without opening a file manager.","vm":"On your own Ubuntu VM, open Terminal and compare whoami with uname -s."},"8":{"objective":"Identify the host computer, the Ubuntu guest, and what lives inside the VM.","why":"A VM is a safe learning environment only if you know which machine a command changes.","example":"cat /etc/os-release","output":"NAME=\"Ubuntu\"\nID=ubuntu","explain":"The simulated file describes the guest distribution; it does not identify your physical laptop.","predict":"You launch Ubuntu inside virtualization software. Ubuntu is the…","answers":["Host computer","Guest operating system","Virtualization software"],"correct":1,"predictionWhy":"Ubuntu is the guest; your normal computer and OS are the host.","mistake":"Assuming a VM can never affect the host.","repair":"Shared folders, networking, and clipboard features can connect host and guest; use VM settings carefully.","solo":"Check the username of the account inside the simulated Ubuntu guest.","soloHint":"Try a command that reports the current user.","vm":"On your own VM, observe its desktop and terminal. Identify one host/guest difference without modifying settings."},"1":{"objective":"Move between home, Documents, and Desktop using relative paths.","why":"Every shell task begins in a location. A wrong directory is a common reason commands fail.","example":"pwd\ncd Documents\npwd","output":"/home/student\n/home/student/Documents","explain":"cd changes the current directory. pwd proves where you ended up.","predict":"What does cd .. do?","answers":["Goes to the parent directory","Deletes a directory","Lists hidden files"],"correct":0,"predictionWhy":".. means the parent directory.","mistake":"Typing documents when the folder is named Documents.","repair":"Linux filenames and directory names are case-sensitive.","solo":"Move into Desktop from your current Documents directory.","soloHint":"Think about how .. and / work together.","vm":"In your own Ubuntu VM, navigate home → Documents → back home and verify with pwd."},"2":{"objective":"Create an organized directory and a new file without a graphical file manager.","why":"You will eventually need project folders for scripts, reports, and configuration files.","example":"mkdir mylab\ntouch mylab/notes.txt\nls mylab","output":"notes.txt","explain":"mkdir creates a directory and touch makes an empty file. A path lets you operate inside another directory.","predict":"Which command creates a directory?","answers":["touch","mkdir","cat"],"correct":1,"predictionWhy":"mkdir literally means make directory.","mistake":"Creating a file before its parent folder exists.","repair":"Create folders first, then reference paths within them.","solo":"Add another file called practice.txt inside LinuxLab.","soloHint":"You are still in Documents after guided practice.","vm":"On your own VM, create a practice-only folder in your home directory and a blank note file."},"3":{"objective":"Explain the difference between copying and renaming files.","why":"Backups and organization are basic administration habits.","example":"cp hello.txt backup.txt\nmv backup.txt done.txt","output":"(No output when successful)","explain":"cp preserves the source; mv changes a filename or location. Neither is a substitute for backups.","predict":"After cp source.txt copy.txt, which is true?","answers":["source.txt is deleted","Both files can exist","Both files are always identical forever"],"correct":1,"predictionWhy":"cp creates a separate copy.","mistake":"Accidentally overwriting an important destination.","repair":"Check filenames before using cp or mv on valuable data.","solo":"Make a separate backup.txt copy of hello.txt.","soloHint":"The original hello.txt should stay unchanged.","vm":"On your VM, copy a sample file in a practice folder; verify both exist using ls."},"4":{"objective":"Read a text file, search it, and identify hidden files.","why":"Log files, configuration files, and text search are daily Linux tasks.","example":"cat welcome.txt\ngrep Ubuntu welcome.txt","output":"Welcome to your Ubuntu practice space.\nUbuntu is a Linux distribution.\nLearn one command at a time.\n\nUbuntu is a Linux distribution.","explain":"cat prints file contents; grep prints only matching lines. ls -a reveals dotfiles.","predict":"What does grep search for?","answers":["Matching text inside files","Free disk space","Installed packages"],"correct":0,"predictionWhy":"grep searches lines of text for matches.","mistake":"Expecting grep ubuntu to match Ubuntu by default.","repair":"Plain grep searches are usually case-sensitive.","solo":"Search welcome.txt for the word Linux instead of Ubuntu.","soloHint":"The word appears in the same file.","vm":"On your VM, make a harmless text file, then find a specific word with grep."},"5":{"objective":"Read long-format file permissions and make a script executable.","why":"Permissions can prevent accidental changes and restrict who may run a file.","example":"ls -l setup.sh\nchmod +x setup.sh","output":"-rw-r--r--  1 student student … setup.sh\n(chmod makes it executable)","explain":"r=read, w=write, x=execute. chmod changes permissions; it does not inspect script safety.","predict":"What is the x in rwx?","answers":["Export","Execute","Exclusive owner"],"correct":1,"predictionWhy":"The x permission controls the ability to execute.","mistake":"Confusing execute permission with a guarantee that a script is safe.","repair":"Inspect script contents before giving execute permission or running it.","solo":"Inspect setup.sh again and confirm it now has execute permission.","soloHint":"Use the detailed listing format again.","vm":"On your own VM, check permissions of a script you created; avoid changing system files."},"6":{"objective":"Use apt to discover packages and explain what sudo changes.","why":"Package management is a core Ubuntu administration skill.","example":"apt search nano\nsudo apt update","output":"nano — sample package available\nReading package lists… Done","explain":"apt searches/install packages; sudo runs a command with elevated privileges. The app only simulates them.","predict":"Why should you be cautious with sudo?","answers":["It changes terminal colors","It runs commands with elevated privileges","It makes commands read-only"],"correct":1,"predictionWhy":"Administrative access can modify sensitive parts of a system.","mistake":"Running unfamiliar install commands from the internet.","repair":"Use official repositories and review what will change before approving a privileged command.","solo":"Verify that the simulated nano package is now available.","soloHint":"There is a command that prints a program version.","vm":"On a personal VM, search for nano with apt search; only install packages when you have permission."},"7":{"objective":"Complete a file-workflow independently: create, write, and verify.","why":"Real work involves sequences, not isolated trivia questions.","example":"mkdir practice\ncd practice\necho Hello > note.txt\ncat note.txt","output":"Hello","explain":"Each command relies on the previous result: folder, location, file, and verification.","predict":"What does > do in echo Hi > note.txt?","answers":["Replaces file contents with the output","Prints the working directory","Searches note.txt"],"correct":0,"predictionWhy":"> redirects output into a file, replacing any previous content.","mistake":"Using > when you intended to append.","repair":"The > operator overwrites a file; >> appends in a real shell.","solo":"Search your project notes.txt for the text Learning.","soloHint":"Verify the saved text rather than assuming the last command worked.","vm":"Recreate the workflow in a practice folder of your own Ubuntu VM."},"9":{"objective":"Use vi Normal and Insert modes to create and save a shell script.","why":"Text-only editing helps when there is no graphical environment.","example":"vi hello.sh\n# press i, write script; Esc, :wq\nbash hello.sh","output":"Hello from vi","explain":"vi is modal: i begins insertion, Esc returns to Normal, and :wq writes and exits. The practice editor is simplified.","predict":"What does pressing i normally do in vi?","answers":["Start editing text","Immediately execute the file","Delete the current directory"],"correct":0,"predictionWhy":"The i key enters Insert mode.","mistake":"Typing :wq while still in Insert mode.","repair":"Press Esc first, then run :wq from Normal mode.","solo":"Change your script to print Edited in vi instead, save, and run it.","soloHint":"Reopen hello.sh. Change the echo line, then save with :wq.","vm":"On your own VM, create a harmless file with vi, save it, reopen it, and quit."},"10":{"objective":"Create and expand a Bash variable inside a script.","why":"Variables let one script work with changing information.","example":"name=\"Linux\"\necho \"Hello $name\"","output":"Hello Linux","explain":"Assignments have no spaces around =. A dollar sign asks Bash for the stored value.","predict":"Which assignment is valid Bash?","answers":["name = Linux","name=\"Linux\"","$name=Linux"],"correct":1,"predictionWhy":"Bash assignments cannot have spaces around the =.","mistake":"Using echo name instead of echo \"$name\".","repair":"Without $, Bash prints the word, not the value stored in the variable.","solo":"Change the name value to Ubuntu and rerun greet.sh.","soloHint":"Edit only the assignment; keep the echo command.","vm":"On your VM, write a Bash script that prints your favorite distribution from a variable."},"16":{"objective":"Predict which quoted strings expand variables.","why":"Quoting controls how Bash treats special characters and spaces.","example":"name=\"Linux\"\necho '$name'\necho \"Hello $name\"","output":"$name\nHello Linux","explain":"Single quotes keep dollar signs literal; double quotes allow expansion. The practice script interpreter supports a subset of Bash.","predict":"What does echo '$name' print in Bash?","answers":["$name","Linux","Nothing"],"correct":0,"predictionWhy":"Single quotes suppress variable expansion.","mistake":"Using single quotes when you wanted a variable value.","repair":"Use double quotes around \"$name\" for expansion while preserving spaces.","solo":"Change the name variable to Ubuntu and rerun quotes.sh.","soloHint":"Compare literal and expanded text in the output.","vm":"On your own VM, compare echo '$HOME' and echo \"$HOME\"."},"11":{"objective":"Write a for loop that iterates across a known list.","why":"For loops remove repeated, copy-pasted commands.","example":"for n in 1 2 3; do\n  echo \"Item $n\"\ndone","output":"Item 1\nItem 2\nItem 3","explain":"The loop variable takes each item in turn. The do/done block runs once per item.","predict":"How many times does for n in a b c; do … done run?","answers":["1","3","Until stopped manually"],"correct":1,"predictionWhy":"It runs once for each of three list items.","mistake":"Forgetting done at the end.","repair":"Every for ... do block needs a matching done.","solo":"Modify the list to 4 5 6 and run the script again.","soloHint":"Keep the variable name; change the three input values.","vm":"In your VM, make a for loop that prints three file extensions such as txt, sh, and log."},"12":{"objective":"Write a while loop with a changing counter and a stopping condition.","why":"While loops are useful when work continues while a condition holds.","example":"count=1\nwhile [ \"$count\" -le 3 ]; do\n  echo \"Count: $count\"\n  count=$((count+1))\ndone","output":"Count: 1\nCount: 2\nCount: 3","explain":"The condition is checked before each iteration. Updating the counter prevents an endless loop.","predict":"What if the count never increases?","answers":["The loop may never stop","Bash automatically fixes it","It runs exactly once"],"correct":0,"predictionWhy":"A true condition can stay true indefinitely without an update.","mistake":"Leaving spaces out around [ and ].","repair":"[ is a command in Bash syntax; whitespace matters.","solo":"Change the initial value to 2, then rerun while-loop.sh.","soloHint":"Keep the stopping condition unchanged.","vm":"On your VM, try a counter from 1 to 3 and explain when the loop stops."},"17":{"objective":"Explain how until differs from while and write a stopping condition.","why":"Until loops express waiting for a condition to become true.","example":"count=1\nuntil [ \"$count\" -gt 3 ]; do\n  echo \"Count: $count\"\n  count=$((count+1))\ndone","output":"Count: 1\nCount: 2\nCount: 3","explain":"Until repeats while its condition is false; the loop stops when the condition becomes true.","predict":"When does an until loop stop?","answers":["When its condition becomes true","When its condition is false","After exactly two runs"],"correct":0,"predictionWhy":"Until is the inverse of while for the loop condition.","mistake":"Reading until as if it meant while.","repair":"Think “keep going until the condition is satisfied.”","solo":"Start the until loop at 2 and rerun the script.","soloHint":"Keep the -gt 3 condition unchanged.","vm":"On your VM, explain the difference between a while and until count-up loop."},"13":{"objective":"Select an action from several patterns using case.","why":"Menus and scripts often need to react to one of several values.","example":"case \"$choice\" in\n  start) echo Starting ;;\n  stop) echo Stopping ;;\n  *) echo Unknown ;;\nesac","output":"Starting (if choice=start)","explain":"case tests patterns in order. ;; ends a branch; esac closes the block.","predict":"What does *) mean in a case statement?","answers":["Default/fallback branch","End the entire script","Start a for loop"],"correct":0,"predictionWhy":"* matches other values not handled by earlier patterns.","mistake":"Missing the ;; branch ending or esac.","repair":"Each branch needs its terminator; every case block needs esac.","solo":"Set choice to stop and rerun menu.sh.","soloHint":"Keep the start/stop branches; change the input value.","vm":"On your VM, make a case-based menu with two options and a fallback."},"14":{"objective":"Use if/else to choose output based on a test.","why":"Conditional logic lets a script respond to system state.","example":"if [ \"$status\" = \"online\" ]; then\n  echo Ready\nelse\n  echo Not ready\nfi","output":"Ready (if status=online)","explain":"The condition chooses the branch. fi closes if; the spaces around [ and ] matter.","predict":"Which keyword ends an if statement in Bash?","answers":["done","fi","esac"],"correct":1,"predictionWhy":"fi is if spelled backward.","mistake":"Writing = with no spaces inside [ test ].","repair":"The test command expects separate arguments and a matching ].","solo":"Set status to offline and rerun status.sh.","soloHint":"Keep the conditional test; update the input value.","vm":"On your VM, test a variable for a string value and describe which branch ran."},"15":{"objective":"Interpret process, disk, and memory tools without changing system settings.","why":"System troubleshooting begins by observing, not guessing.","example":"ps\ndf -h\nfree -h","output":"Processes\nDisk free space\nMemory totals","explain":"ps lists processes, df -h displays disk capacity, and free -h displays memory usage. Demo numbers are fictional.","predict":"Which command checks available disk capacity?","answers":["df -h","vi","whoami"],"correct":0,"predictionWhy":"df reports filesystem disk capacity.","mistake":"Confusing free (memory) with df (storage).","repair":"free -h is memory; df -h is disks.","solo":"List processes using ps with an extra common option.","soloHint":"Try the -ef option with ps.","vm":"On your own VM, compare df -h with free -h without modifying anything."},"19":{"objective":"Explain user IDs, groups, and why administrative privileges matter.","why":"File and service permissions depend on the identity running a task.","example":"id\nid trainee","output":"uid=1000(student) …\nuid=1001(trainee) … (after creation)","explain":"id shows account and group membership. The account creation shown in the app is simulated.","predict":"What is a Linux group used for?","answers":["Assign shared access rights","Increase screen brightness","Store Wi-Fi passwords"],"correct":0,"predictionWhy":"Groups help manage shared permissions.","mistake":"Assuming sudo useradd is safe on a shared machine.","repair":"Only create real accounts with permission on a personally controlled or approved VM.","solo":"Check the identity information for the built-in student account.","soloHint":"Use id with a username.","vm":"On your VM, inspect your own uid and groups with id; do not create accounts on shared systems."},"18":{"objective":"Explain SSH syntax and distinguish a local command from a remote connection.","why":"Remote administration often happens without a graphical desktop.","example":"ssh user@host","output":"SSH would attempt an encrypted connection (demo only)","explain":"The user before @ is the remote username; the host after @ is the target. This simulator never opens a network connection.","predict":"In ssh alice@server.example, which part is the user?","answers":["alice","server.example","ssh"],"correct":0,"predictionWhy":"The part before @ selects the account.","mistake":"Believing an SSH command always succeeds without credentials.","repair":"Real SSH requires a reachable host, permissions, and valid authentication.","solo":"Demonstrate another fake connection: learner@practice.example.","soloHint":"Use ssh followed by user@host. This will not connect to anything.","vm":"On a VM, examine ssh -V and man ssh; connect only to a server you own or are allowed to access."},"20":{"objective":"Describe a web service, its status, and the pieces of a LAMP stack.","why":"A running web service must be installed, started, tested, and monitored.","example":"sudo apt install apache2\nsudo systemctl start apache2\nsystemctl is-active apache2","output":"active (simulated)","explain":"Apache provides HTTP; LAMP also includes a database and PHP. Starting Apache alone is not a full LAMP deployment.","predict":"What does systemctl status usually report?","answers":["Service state and logs","Home directory name","Loop iterations"],"correct":0,"predictionWhy":"systemctl status can show whether a service is active and why.","mistake":"Confusing a working Apache page with a secured production website.","repair":"Real deployments need updates, firewall rules, configuration, and security review.","solo":"Inspect Apache service status with the more detailed command.","soloHint":"Try systemctl status apache2 in this simulator.","vm":"On an approved VM, inspect package information first. Do not expose Apache to the internet without authorization."},"21":{"objective":"Create a small support script, run it, verify system state, and revise its behavior.","why":"Real-world competence means combining editing, control flow, and observation in one project.","example":"case \"$service\" in\n  apache2) echo \"Checking Apache2\" ;;\n  *) echo \"Unknown service\" ;;\nesac","output":"Checking Apache2 (if service=apache2)","explain":"This project combines a case-based decision with process and disk inspection in a safe virtual lab.","predict":"Why test a script after editing it?","answers":["To verify its actual behavior","To make the filename shorter","To turn it into a package"],"correct":0,"predictionWhy":"Running a script is evidence of what it does; reading the code alone is not enough.","mistake":"Assuming a script works because it was saved successfully.","repair":"Test outputs and inspect errors after each change.","solo":"Change service to ssh, save, and rerun report.sh. It should choose the fallback branch.","soloHint":"Edit the assignment inside report.sh; do not remove the case statement.","vm":"On your own VM, build a report script that prints a label, disk space, and process information using commands you have permission to run."}};
+const getUnit=(id)=>courseUnits.find(unit=>unit.ids.includes(id));
+const nextLesson=(i)=>lessonOrder[lessonOrder.indexOf(i)+1];
+const firstIncomplete=()=>lessonOrder.find(i=>!progress.completed[i]);
+const commandGuide=[
+  ['pwd','Show your current working directory','pwd','Usually a great first command.'],
+  ['whoami','Show your username','whoami','Identifies the signed-in account.'],
+  ['uname','Show system/kernel information','uname -s','-s shows the kernel name.'],
+  ['ls','List files and folders','ls -a','-a includes hidden files. -l shows details.'],
+  ['cd','Change your current folder','cd Documents','cd .. goes up one level; cd ~ goes home.'],
+  ['mkdir','Make a new directory','mkdir LinuxLab','The name is case-sensitive.'],
+  ['touch','Create an empty file or update its timestamp','touch notes.txt','Does not erase contents of an existing file.'],
+  ['cat','Print a file’s contents','cat welcome.txt','Great for small text files.'],
+  ['cp','Copy a file','cp hello.txt copy.txt','Original file remains.'],
+  ['mv','Move or rename a file','mv old.txt new.txt','May replace a destination file; use care in real Ubuntu.'],
+  ['rm','Remove a file','rm unwanted.txt','Warning: real rm normally does not send files to Trash.'],
+  ['grep','Find text in a file','grep Ubuntu welcome.txt','Search is usually case-sensitive.'],
+  ['find','Find matching filenames','find . -name notes.txt','The dot means start searching in the current directory.'],
+  ['chmod','Change file permissions','chmod +x setup.sh','Execute permissions have security consequences.'],
+  ['apt search','Search Ubuntu software packages','apt search nano','Safe to search; our catalog is a demo.'],
+  ['sudo apt update','Update available package information','sudo apt update','On real systems, requires admin access.'],
+  ['sudo apt install','Install a package on Ubuntu','sudo apt install nano','Never run unknown commands with sudo.'],
+  ['man','Read a command manual','man ls','This simulator shows abbreviated help.'],
+  ['echo','Print text, optionally write to a file','echo Learning Linux > notes.txt','> overwrites file contents.'],
+  ['vi','Edit a file using Normal and Insert modes','vi hello.sh','Press i to insert, Esc to return to Normal, then :wq to save and quit.'],
+  ['bash','Run a shell script','bash hello.sh','This app only simulates a safe subset of Bash.'],
+  ['for','Repeat a block for items','for n in 1 2 3; do echo $n; done','Use done to end the loop.'],
+  ['while','Repeat while condition is true','while [ "$count" -le 3 ]; do ...; done','Make sure the condition eventually becomes false.'],
+  ['case','Choose a branch by matching patterns','case "$choice" in start) echo Starting ;; esac','Use ;; to end a branch and esac to close the statement.'],
+  ['if','Execute based on a condition','if [ "$status" = "online" ]; then echo OK; fi','Use fi to close the statement.'],
+  ['ps','List processes','ps','Shows fictional processes in this simulator.'],
+  ['df','Show filesystem space','df -h','-h uses human-readable units. Demo values here.'],
+  ['free','Show memory usage','free -h','-h uses human-readable units. Demo values here.'],
+  ['until','Repeat until a condition becomes true','until [ "$count" -gt 3 ]; do ...; done','Opposite of while; remember to update the counter.'],
+  ['ssh','Secure remote shell access','ssh student@lab.example','This demo does not open a real network connection.'],
+  ['id','Show a user and their groups','id trainee','Lists simulated user and group identifiers.'],
+  ['sudo useradd','Create a user (administrator action)','sudo useradd trainee','This demo uses fake accounts only.'],
+  ['systemctl','Inspect or control a service','systemctl is-active apache2','Only Apache2 is supported in this lab.'],
+  ['curl','Transfer data from an URL','curl http://localhost','Shows a synthetic response, not a real HTTP request.'],
+  ['apache2','Apache HTTP server package','sudo apt install apache2','Demo only; does not install software.'],
+  ['help','See simulator-supported commands','help','This lab supports a subset of real Linux commands.']
+];
+const defaultProgress=()=>({selected:0,completed:{},priorCompleted:{},steps:{},sessions:{},predictions:{},transfer:{},review:{},notes:{},scenarios:{},scenarioSelected:'opening',view:'learn'});
+let progress=defaultProgress();
+try{const current=localStorage.getItem(STORAGE),previous=current?null:(localStorage.getItem('teachMeLinux_ubuntu_mvp_v2')||localStorage.getItem('teachMeLinux_ubuntu_mvp_v1'));const saved=JSON.parse(current||previous||'null');if(saved&&typeof saved==='object'){progress={...defaultProgress(),...saved};if(!current){progress.priorCompleted={...(saved.completed||{})};progress.completed={};}if(!Number.isInteger(progress.selected)||progress.selected<0||progress.selected>=lessons.length)progress.selected=0;if(!['learn','play','guide','review','scenarios'].includes(progress.view))progress.view='learn';}}catch(_e){}
+let fs={},cwd=HOME,installed=new Set(),createdUsers=new Set(),servicesRunning=new Set(),terminalHistory=[],historyIndex=0,output=[],currentHint=-1,soloHint=false,quizWrong=false,guideSearch='',notice='';
+for(const key of ['sessions','priorCompleted','predictions','transfer','review','notes']){if(!progress[key]||typeof progress[key]!=='object'||Array.isArray(progress[key]))progress[key]={};}
+function sessionKey(){return progress.view==='learn'?`learn-${progress.selected}`:progress.view;}
+function snapshotCurrent(){if(progress.view==='learn'||progress.view==='play')progress.sessions[sessionKey()]={fs:JSON.parse(JSON.stringify(fs)),cwd,installed:[...installed],createdUsers:[...createdUsers],servicesRunning:[...servicesRunning],terminalHistory:[...terminalHistory],output:[...output],editor:editor?{...editor}:null};}
+function restoreCurrent(){if(progress.view==='guide'||progress.view==='review'||progress.view==='scenarios')return;const s=progress.sessions[sessionKey()];if(!s||!s.fs||typeof s.fs!=='object'||!s.fs[HOME]||!s.fs['/']){newFilesystem();return;}fs=JSON.parse(JSON.stringify(s.fs));cwd=typeof s.cwd==='string'&&fs[s.cwd]?.type==='dir'?s.cwd:HOME;installed=new Set(Array.isArray(s.installed)?s.installed:[]);createdUsers=new Set(Array.isArray(s.createdUsers)?s.createdUsers:[]);servicesRunning=new Set(Array.isArray(s.servicesRunning)?s.servicesRunning:[]);terminalHistory=Array.isArray(s.terminalHistory)?s.terminalHistory:[];historyIndex=terminalHistory.length;output=Array.isArray(s.output)?s.output:[];editor=s.editor&&typeof s.editor.path==='string'?s.editor:null;}
+function save(){try{localStorage.setItem(STORAGE,JSON.stringify(progress));}catch(_e){}}
+function esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function dir(p){fs[p]={type:'dir'};}
+function file(p,content='',mode='-rw-r--r--'){fs[p]={type:'file',content,mode};}
+function newFilesystem(){
+  editor=null;lastScriptOutput='';fs={};cwd=HOME;installed=new Set();createdUsers=new Set();servicesRunning=new Set();terminalHistory=[];historyIndex=0;output=[];
+  for(const p of ['/','/home',HOME,HOME+'/Documents',HOME+'/Desktop',HOME+'/Downloads','/etc','/tmp'])dir(p);
+  file(HOME+'/welcome.txt','Welcome to your Ubuntu practice space.\nUbuntu is a Linux distribution.\nLearn one command at a time.\n');
+  file(HOME+'/.bashrc','# Example shell startup settings\n');
+  file(HOME+'/Documents/hello.txt','Hello from Ubuntu!\nLearning Linux is possible for everyone.\n');
+  file(HOME+'/Documents/tasks.txt','1. Practice terminal commands\n2. Try a new challenge\n');
+  file(HOME+'/Documents/setup.sh','#!/bin/sh\necho "Hello from a script"\n');
+  file('/etc/os-release','NAME="Ubuntu"\nID=ubuntu\n');
+  push('system','Welcome! This is a SAFE simulation, not a real shell.');
+  push('muted','Type help for commands. Nothing here changes your computer.');
+}
+function push(type,t){output.push({type,text:String(t),at:cwd});if(output.length>100)output=output.slice(-100);}
+function norm(path){if(!path||path==='~')return HOME;path=path.replace(/^~(?=\/)/,HOME);let parts=(path.startsWith('/')?[]:cwd.split('/').filter(Boolean));for(const piece of path.split('/')){if(!piece||piece==='.')continue;if(piece==='..')parts.pop();else parts.push(piece)}return '/'+parts.join('/');}
+function parentOf(path){return path.slice(0,path.lastIndexOf('/'))||'/';}
+function basename(path){return path.split('/').pop()||'/';}
+function withinHome(path){return path===HOME||path.startsWith(HOME+'/')||path==='/tmp'||path.startsWith('/tmp/');}
+function children(path,all=false){const names=[];for(const p in fs){if(p===path||parentOf(p)!==path)continue;const n=basename(p);if(!all&&n.startsWith('.'))continue;names.push(n);}return names.sort((a,b)=>a.localeCompare(b));}
+function fmtPerm(node){return node.type==='dir'?'drwxr-xr-x':(node.mode||'-rw-r--r--');}
+function fmtLs(path,long=false,all=false){if(!fs[path])return {ok:false,msg:`ls: cannot access '${path}': No such file or directory`};const entries=fs[path].type==='dir'?children(path,all).map(x=>[x,fs[norm(path+'/'+x)]]):[[basename(path),fs[path]]];if(all&&fs[path].type==='dir'){entries.unshift(['..',fs[parentOf(path)]],['.',fs[path]]);}if(!long)return{ok:true,msg:entries.map(e=>e[0]).join('    ')||'(empty directory)'};return{ok:true,msg:entries.map(([n,node])=>`${fmtPerm(node)}  1 student student   ${String(node.content?.length||0).padStart(4)}   ${n}`).join('\n')||'(empty directory)'};}
+function tokenize(input){let arr=[],current='',quote=null,active=false;for(let i=0;i<input.length;i++){const c=input[i];if(quote){if(c===quote){quote=null;active=true;}else if(c==='\\'&&quote==='"'&&i+1<input.length){current+=input[++i];active=true;}else{current+=c;active=true;}}else if(c==='"'||c==="'"){quote=c;active=true;}else if(/\s/.test(c)){if(active){arr.push(current);current='';active=false;}}else if(c==='\\'&&i+1<input.length){current+=input[++i];active=true;}else{current+=c;active=true;}}if(quote)return {error:'Unclosed quote. Try adding the matching quote.'};if(active)arr.push(current);return {arr};}
+// ----------------- Script lab: deliberately restricted educational simulation -----------------
+let editor=null,lastScriptOutput='';
+function runBashSubset(source){
+  const lines=source.replace(/\r\n?/g,'\n').split('\n').map(s=>s.trim()).filter(Boolean);
+  if(source.length>12000||lines.length>150)return{ok:false,msg:'This practice interpreter accepts short scripts only (up to 12,000 characters / 150 lines).'};
+  const vars=Object.create(null),out=[];
+  let ticks=0;
+  const fail=(msg)=>{throw Error(msg)};
+  const exp=(value)=>String(value)
+    .replace(/\$\(\(\s*([a-zA-Z_]\w*)\s*([+-])\s*(\d+)\s*\)\)/g,(_,n,op,v)=>String((Number(vars[n])||0)+(op==='+'?1:-1)*Number(v)))
+    .replace(/\$\{([a-zA-Z_]\w*)\}|\$([a-zA-Z_]\w*)/g,(_,a,b)=>vars[a||b]??'');
+  const unquote=(value)=>{let v=String(value).trim();if(v.length>=2&&v[0]==="'"&&v.at(-1)==="'")return v.slice(1,-1);if(v.length>=2&&v[0]==='"'&&v.at(-1)==='"')v=v.slice(1,-1);return exp(v);};
+  const simple=(line)=>{
+    if(!line||line.startsWith('#'))return;
+    const assignment=line.match(/^([a-zA-Z_]\w*)=(.+)$/);
+    if(assignment){vars[assignment[1]]=unquote(assignment[2]);return;}
+    const echo=line.match(/^echo(?:\s+(.+))?$/);
+    if(echo){out.push(unquote(echo[1]||''));return;}
+    fail('Unsupported script statement: '+line+'. Try assignments and echo inside supported Bash blocks.');
+  };
+  function findStop(start,end,close){
+    let depth=0;
+    for(let j=start+1;j<end;j++){
+      if(/^(for |while |until )/.test(lines[j]))depth++;
+      if(lines[j]==='done'){if(depth===0)return j;depth--;}
+    }
+    fail('Missing '+close+' for a loop.');
+  }
+  function run(start,end){
+    for(let i=start;i<end;i++){
+      if(++ticks>250)fail('Practice execution halted after 250 steps. Check for an infinite loop.');
+      const line=lines[i];
+      if(!line||line.startsWith('#'))continue;
+      if(line.startsWith('for ')){
+        const m=line.match(/^for\s+([a-zA-Z_]\w*)\s+in\s+(.+?)\s*;\s*do$/);
+        if(!m)fail('Use: for n in 1 2 3; do ... done (on separate lines).');
+        const stop=findStop(i,end,'done');
+        const list=m[2].trim().split(/\s+/).map(unquote);
+        if(list.length>30)fail('Practice loops are limited to 30 list items.');
+        for(const item of list){vars[m[1]]=item;run(i+1,stop);}
+        i=stop;continue;
+      }
+      if(line.startsWith('while ')||line.startsWith('until ')){
+        const isUntil=line.startsWith('until ');
+        const m=line.match(/^(?:while|until)\s+\[\s*"?\$([a-zA-Z_]\w*)"?\s+(-le|-lt|-eq|-ge|-gt|-ne)\s+(-?\d+)\s*\]\s*;\s*do$/);
+        if(!m)fail('Use: while [ "$count" -le 3 ]; do ... done. Or until [ "$count" -gt 3 ]; do ... done.');
+        const stop=findStop(i,end,'done');let iterations=0;
+        const condition=()=>{let a=Number(vars[m[1]]),b=Number(m[3]);if(!Number.isFinite(a))fail('Loop variable must contain a number.');return({'-le':a<=b,'-lt':a<b,'-eq':a===b,'-ge':a>=b,'-gt':a>b,'-ne':a!==b})[m[2]];};
+        while(isUntil?!condition():condition()){if(++iterations>30)fail('Loop halted after 30 iterations to keep this simulator safe.');run(i+1,stop);}
+        i=stop;continue;
+      }
+      if(line.startsWith('case ')){
+        const m=line.match(/^case\s+(.+?)\s+in$/);if(!m)fail('Use: case "$choice" in');
+        const value=unquote(m[1]);let stop=i+1;
+        for(;stop<end&&lines[stop]!=='esac';stop++);
+        if(stop===end)fail('A case statement must end with esac.');
+        let matched=false,pattern=null,action='';
+        const flush=()=>{
+          if(pattern===null)return;
+          const choices=pattern.split('|').map(x=>unquote(x.trim()));
+          if(!matched&&(choices.includes(value)||choices.includes('*'))){
+            matched=true;
+            action.split(';').map(v=>v.trim()).filter(Boolean).forEach(simple);
+          }
+        };
+        for(let j=i+1;j<stop;j++){
+          let piece=lines[j];
+          const head=piece.match(/^([^)]*)\)\s*(.*)$/);
+          if(head){flush();pattern=head[1].trim();action=head[2];}
+          else if(pattern!==null)action+=' '+piece;
+          else fail('A case branch needs a pattern) label.');
+          if(action.includes(';;')){action=action.split(';;')[0];flush();pattern=null;action='';}
+        }
+        if(pattern!==null)fail('Use ;; to close each case branch.');
+        i=stop;continue;
+      }
+      if(line.startsWith('if ')){
+        const m=line.match(/^if\s+\[\s*"?\$([a-zA-Z_]\w*)"?\s+(=|==|!=)\s+"?([a-zA-Z0-9_-]+)"?\s*\]\s*;\s*then$/);
+        if(!m)fail('Use: if [ "$status" = "online" ]; then');
+        let nest=0,elseAt=-1,stop=-1;
+        for(let j=i+1;j<end;j++){
+          if(lines[j].startsWith('if '))nest++;
+          if(lines[j]==='fi'){if(nest===0){stop=j;break;}nest--;}
+          if(lines[j]==='else'&&nest===0)elseAt=j;
+        }
+        if(stop===-1)fail('An if statement must end with fi.');
+        const v=String(vars[m[1]]??'');const hit=m[2]==='!='?v!==m[3]:v===m[3];
+        if(hit)run(i+1,elseAt<0?stop:elseAt);
+        else if(elseAt>=0)run(elseAt+1,stop);
+        i=stop;continue;
+      }
+      if(['done','esac','fi','else'].includes(line))fail('Unexpected Bash closing keyword: '+line);
+      simple(line);
+    }
+  }
+  try{run(0,lines.length);return{ok:true,msg:out.join('\n')||'(script finished with no output)'};}
+  catch(e){return{ok:false,msg:'Bash practice error: '+e.message};}
+}
+function scriptMatchesLesson(index,source){
+  const expected={9:'Hello from vi',10:'Hello Linux',11:'Item 1\nItem 2\nItem 3',12:'Count: 1\nCount: 2\nCount: 3',13:'Starting',14:'Service is online',16:'$name\nHello Linux',17:'Count: 1\nCount: 2\nCount: 3'};
+  if(!(index in expected))return false;
+  if(!source.startsWith('#!/bin/bash'))return false;
+  const structure={
+    9:/^echo\s+Hello from vi$/m,
+    10:/^name=["']?Linux["']?$/m,
+    11:/^for\s+[a-zA-Z_]\w*\s+in\s+1\s+2\s+3\s*;\s*do$/m,
+    12:/^while\s+\[/m,
+    13:/^case\s+.+\s+in$/m,
+    14:/^if\s+\[/m,
+    16:/^echo\s+'\$name'$/m,
+    17:/^until\s+\[/m
+  };
+  if(!structure[index].test(source))return false;
+  if(index===10&&!/echo.*\$name/.test(source))return false;
+  if(index===12&&!/count=\$\(\(count\+1\)\)/.test(source))return false;
+  if(index===13&&!/\*\)/.test(source))return false;
+  if(index===14&&(!/^else$/m.test(source)||!/^fi$/m.test(source)))return false;
+  if(index===16&&(!/^echo \"Hello \$name\"$/m.test(source)||!/^name=\"Linux\"$/m.test(source)))return false;
+  if(index===17&&(!/count=\$\(\(count\+1\)\)/.test(source)||!/^done$/m.test(source)))return false;
+  const result=runBashSubset(source);
+  return result.ok&&result.msg===expected[index];
+}
+function editorMarkup(){
+  const insertion=editor.mode==='insert',name=basename(editor.path);
+  return `<section class="vi-zone" aria-label="Vi editor practice"><div class="vi-header"><div><strong>vi · ${esc(name)}</strong><span class="vi-badge ${insertion?'insert':''}">${insertion?'-- INSERT --':'NORMAL'}</span></div><span class="tag gray">SIMULATED VI</span></div><div class="vi-tip">${insertion?'Type in the editor. Press Esc to return to Normal mode.':'Press i (or tap Insert mode) to edit. Use :wq in Normal mode to save and quit.'}</div><label class="sr-only" for="vi-editor">File contents for ${esc(name)}</label><textarea id="vi-editor" class="vi-textarea" rows="9" ${insertion?'':'readonly'} spellcheck="false" autocapitalize="off" placeholder="${insertion?'Write your Bash script here':'Press Insert mode to write your Bash script'}">${esc(editor.draft)}</textarea><div class="vi-toolbar"><button type="button" class="tiny" data-action="vi-insert" ${insertion?'disabled':''}>i · Insert mode</button><button type="button" class="tiny" data-action="vi-normal" ${!insertion?'disabled':''}>Esc · Normal</button><button type="button" class="btn primary small" data-action="vi-save" ${insertion?'disabled':''}>:wq · Save & quit</button><button type="button" class="tiny" data-action="vi-quit">:q! · Discard</button></div><form id="vi-command-form" class="vi-command-form" autocomplete="off"><label for="vi-command-input">:</label><input id="vi-command-input" placeholder="wq or q!" aria-label="vi command (wq or q!)" spellcheck="false" autocapitalize="off" ${insertion?'disabled':''}/><button type="submit" class="tiny" ${insertion?'disabled':''}>Enter</button></form><div class="vi-foot">Simplified mode practice, not the full vi/Vim editor. No changes to your device.</div></section>`;
+}
+function editorOpen(name){
+  if(!name||name.startsWith('-'))return{ok:false,msg:'Usage: vi filename.sh'};
+  const path=norm(name);
+  if(!withinHome(path)||!fs[parentOf(path)]||fs[parentOf(path)].type!=='dir')return{ok:false,msg:'vi: Use an existing folder in your simulated home.'};
+  if(fs[path]&&fs[path].type!=='file')return{ok:false,msg:'vi: cannot edit a directory.'};
+  editor={path,mode:'normal',draft:fs[path]?.content||''};
+  return{ok:true,msg:`Opened ${basename(path)} in vi Normal mode. Press i to edit.`};
+}
+function editorSave(){
+  if(!editor||editor.mode!=='normal')return;
+  const {path,draft}=editor;
+  file(path,draft,fs[path]?.mode||'-rw-r--r--');
+  editor=null;
+  push('success',`"${basename(path)}" written and closed (:wq).`);
+  if(progress.view==='learn'&&!progress.completed[progress.selected]){
+    const i=progress.selected,step=currentSteps();
+    if(stepMatches(i,step,'vi-save',[path])){
+      progress.steps[i]=step+1;
+      push('success',`✓ Mission step ${step+1} complete!`);
+    }else if(([9,10,11,12,13,14,16,17,21].includes(i))&&step===1){
+      push('muted','Saved, but this exercise is not complete yet. Reopen the file and compare it with the hint.');
+    }
+  }
+  snapshotCurrent();save();render();
+}
+function editorCommand(v){
+  if(!editor||editor.mode!=='normal')return;
+  const command=String(v).trim().replace(/^:/,'');
+  if(command==='wq'){editorSave();return;}
+  if(command==='q!'){editorDiscard();return;}
+  if(command==='w'){
+    file(editor.path,editor.draft,fs[editor.path]?.mode||'-rw-r--r--');
+    push('success',`"${basename(editor.path)}" written (:w). Editor remains open.`);
+    snapshotCurrent();save();render();return;
+  }
+  if(command==='q'&&editor.draft===(fs[editor.path]?.content||'')){editorDiscard();return;}
+  push('error','vi practice supports :w, :wq, :q and :q!. If editing, press Esc first.');
+  snapshotCurrent();save();render();
+}
+function editorDiscard(){if(!editor)return;const name=basename(editor.path);editor=null;push('muted',`Exited ${name} without saving (:q!).`);snapshotCurrent();save();render();}
+function toggleViMode(mode){if(!editor)return;editor.mode=mode;snapshotCurrent();save();render();document.getElementById('vi-editor')?.focus({preventScroll:true});}
+
+function execute(raw){
+  let result={ok:true,msg:''};const tok=tokenize(raw);if(tok.error)return {ok:false,msg:tok.error,command:'',args:[]};let [command,...args]=tok.arr;if(!command)return{ok:true,msg:'',command:'',args:[]};
+  const no=(message)=>({ok:false,msg:message,command,args});
+  const ok=(msg)=>({ok:true,msg:msg||'',command,args});
+  const requireFile=(a)=>{const p=norm(a||'');return fs[p]&&fs[p].type==='file'?p:null;};
+  switch(command){
+    case 'vi':case 'vim':{
+      if(args.length!==1)return no('Usage: vi filename.sh');
+      const r=editorOpen(args[0]);return{...r,command:'vi',args};
+    }
+    case 'bash':{
+      if(args.length!==1)return no('Usage: bash script.sh');
+      const path=norm(args[0]);
+      if(!fs[path]||fs[path].type!=='file')return no(`bash: ${args[0]}: No such file`);
+      const result=runBashSubset(fs[path].content);
+      lastScriptOutput=result.ok?result.msg:'';
+      return{...result,command,args};
+    }
+    case 'ssh':{
+      if(args.length===1&&args[0]==='-V')return ok('OpenSSH_9.xp1 Ubuntu (fictional demo version)');
+      if(args.length===1&&/^[a-z][a-z0-9_-]*@(?:[a-z0-9-]+\.)+example$/.test(args[0]))return ok('DEMO ONLY: Would connect to '+args[0]+' using SSH. No network connection was made.');
+      return no('Try ssh -V or ssh user@host.example; the simulated SSH client makes no network connection.');
+    }
+    case 'id':{
+      const user=args[0]||'student';if(user==='student')return ok('uid=1000(student) gid=1000(student) groups=1000(student),27(sudo) (demo)');
+      if(createdUsers.has(user))return ok(`uid=1001(${user}) gid=1001(${user}) groups=1001(${user}) (demo)`);
+      return no(`id: '${user}': no such simulated user`);
+    }
+    case 'systemctl':{
+      if(args.length===2&&args[0]==='is-active'&&args[1]==='apache2')return servicesRunning.has('apache2')?ok('active (simulated)'):no('inactive (simulated)');
+      if(args.length===2&&args[0]==='status'&&args[1]==='apache2')return ok(`apache2.service - The Apache HTTP Server (demo)\nActive: ${servicesRunning.has('apache2')?'active (running)':'inactive'}\nNo real service exists.`);
+      return no('This lab supports systemctl is-active apache2 and systemctl status apache2.');
+    }
+    case 'curl':{
+      if(args.length===1&&args[0]==='http://localhost'){if(!servicesRunning.has('apache2'))return no('curl: localhost demo server is not running.');return ok('<html><body>Apache2 Ubuntu Default Page - It works! (simulated)</body></html>');}
+      return no('No real network access. This lab supports only curl http://localhost with its fake Apache service.');
+    }
+    case 'ps':return ok('  PID TTY          TIME CMD\n 1012 pts/0    00:00:01 bash\n 1045 pts/0    00:00:00 ps\n(Demo data)');
+    case 'df':return args.join(' ')==='-h'?ok('Filesystem      Size  Used Avail Use% Mounted on\n/dev/vda1        20G  6.0G   13G  32% /\n(Demo data)'):no('In this lab, use df -h.');
+    case 'free':return args.join(' ')==='-h'?ok('              total        used        free      available\nMem:           4Gi       1.2Gi       2.1Gi       2.6Gi\nSwap:          2Gi          0B       2Gi\n(Demo data)'):no('In this lab, use free -h.');
+    case 'pwd':return ok(cwd);
+    case 'whoami':return ok('student');
+    case 'uname':return ok(args.includes('-s')?'Linux':'Linux ubuntu-virtual (simulated)');
+    case 'ls':{
+      const long=args.some(a=>a.startsWith('-')&&a.includes('l'));const all=args.some(a=>a.startsWith('-')&&a.includes('a'));const targets=args.filter(a=>!a.startsWith('-'));if(targets.length>1)return no('This practice lab supports one ls path at a time.');result=fmtLs(norm(targets[0]||'.'),long,all);return{...result,command,args};
+    }
+    case 'cd':{if(args.length>1)return no('cd: too many arguments');const p=norm(args[0]||'~');if(!fs[p])return no(`cd: ${args[0]}: No such file or directory`);if(fs[p].type!=='dir')return no(`cd: ${args[0]}: Not a directory`);cwd=p;return ok('');}
+    case 'mkdir':{if(!args.length)return no('mkdir: missing operand');if(args.some(a=>a.startsWith('-')))return no('This simulator uses mkdir folder-name without options.');for(const a of args){const p=norm(a);if(fs[p])return no(`mkdir: cannot create directory '${a}': File exists`);if(!fs[parentOf(p)]||fs[parentOf(p)].type!=='dir')return no(`mkdir: cannot create directory '${a}': No such directory`);if(!withinHome(p))return no('This practice lab only changes files inside your home or /tmp.');}for(const a of args)dir(norm(a));return ok('');}
+    case 'touch':{if(!args.length)return no('touch: missing file operand');for(const a of args){const p=norm(a);if(!fs[parentOf(p)])return no(`touch: cannot touch '${a}': No such directory`);if(!withinHome(p))return no('This practice lab only changes files inside your home or /tmp.');if(fs[p]&&fs[p].type==='dir')return no(`touch: '${a}' is a directory`);}for(const a of args)if(!fs[norm(a)])file(norm(a));return ok('');}
+    case 'cat':{if(args.length!==1)return no('Usage: cat filename');const p=requireFile(args[0]);if(!p)return no(`cat: ${args[0]}: No such file`);return ok(fs[p].content||'(empty file)');}
+    case 'cp':case 'mv':{
+      if(args.length!==2)return no(`Usage: ${command} source destination`);const s=requireFile(args[0]),d=norm(args[1]);if(!s)return no(`${command}: cannot find source file '${args[0]}'`);if(!fs[parentOf(d)]||fs[parentOf(d)].type!=='dir')return no(`${command}: destination folder does not exist`);if(!withinHome(d)||!withinHome(s))return no('This practice lab only changes files inside your home or /tmp.');if(fs[d]&&fs[d].type==='dir')return no('Destination must be a filename in this simulator.');if(s===d)return no('Source and destination are the same file.');file(d,fs[s].content,fs[s].mode);if(command==='mv')delete fs[s];return ok('');
+    }
+    case 'rm':{if(args.length!==1||args[0].startsWith('-'))return no('This safety-focused lab supports only: rm filename. No recursive deletion.');const p=requireFile(args[0]);if(!p)return no(`rm: cannot remove '${args[0]}': No such file`);if(!withinHome(p))return no('This practice lab protects system files.');delete fs[p];return ok('');}
+    case 'rmdir':{if(args.length!==1)return no('Usage: rmdir empty-folder');const p=norm(args[0]);if(!fs[p]||fs[p].type!=='dir')return no('Directory not found.');if(!withinHome(p)||p===HOME||p==='/tmp')return no('This practice lab protects system folders.');if(children(p,true).length)return no('rmdir: Directory not empty');delete fs[p];return ok('');}
+    case 'echo':{
+      const cut=args.indexOf('>');if(cut===-1)return ok(args.join(' '));if(cut===0||cut!==args.length-2)return no('Try: echo Learning Linux > notes.txt');const path=norm(args[cut+1]);if(!fs[parentOf(path)]||fs[parentOf(path)].type!=='dir')return no('echo: destination folder not found');if(!withinHome(path))return no('This practice lab protects system files.');if(fs[path]&&fs[path].type==='dir')return no('echo: target is a directory');file(path,args.slice(0,cut).join(' ')+'\n',fs[path]?.mode||'-rw-r--r--');return ok('');
+    }
+    case 'grep':{if(args.length<2)return no('Usage: grep word filename');const p=requireFile(args.at(-1));if(!p)return no('grep: file not found');const query=args.slice(0,-1).join(' ');const match=fs[p].content.split('\n').filter(l=>l.includes(query)).join('\n');if(!match)return no('(no matches)');return ok(match);}
+    case 'find':{if(args.length!==3||args[1]!=='-name')return no('Usage: find . -name filename');const base=norm(args[0]),name=args[2];if(!fs[base]||fs[base].type!=='dir')return no('find: starting directory not found');const match=Object.keys(fs).filter(p=>p.startsWith(base==='/'?'/':base+'/')&&basename(p)===name);return ok(match.join('\n')||'(no matches)');}
+    case 'chmod':{if(args.length!==2||args[0]!=='+x')return no('This simulator supports: chmod +x filename');const p=requireFile(args[1]);if(!p)return no('chmod: file not found');if(!withinHome(p))return no('This practice lab protects system files.');fs[p].mode='-rwxr-xr-x';return ok('');}
+    case 'sudo':{
+      if(args[0]==='useradd'){
+        if(args.length!==2||!/^[a-z][a-z0-9_-]{0,20}$/.test(args[1]))return no('Demo user syntax: sudo useradd trainee');
+        if(args[1]==='student'||createdUsers.has(args[1]))return no('Simulated user already exists.');
+        createdUsers.add(args[1]);return ok(`Simulated user ${args[1]} created. No real accounts modified.`);
+      }
+      if(args[0]==='systemctl'){
+        if(args.length!==3||args[1]!=='start'||args[2]!=='apache2')return no('Demo command: sudo systemctl start apache2');
+        if(!installed.has('apache2'))return no('Apache2 is not installed in the simulated package database.');
+        servicesRunning.add('apache2');return ok('Apache2 service started (simulated; no real process).');
+      }
+      if(args[0]!=='apt')return no('The simulator supports sudo apt, sudo useradd, and sudo systemctl start apache2.');const act=args[1],pkg=args[2];if(act==='update'&&args.length===2)return ok('Hit:1 Ubuntu demo package index\nReading package lists... Done\n(Demo only — no network request)');if(act==='install'&&pkg){if(!['nano','tree','curl','htop','apache2'].includes(pkg))return no(`E: Unable to locate package ${pkg} (limited demo catalog)`);installed.add(pkg);return ok(`Reading package lists... Done\nSetting up ${pkg}... Done\n(Simulated: nothing installed on your device)`);}return no('Try sudo apt update or sudo apt install nano.');}
+    case 'apt':{if(args[0]==='search'&&args[1]){const pkg=args[1];if(['nano','tree','curl','htop','apache2'].includes(pkg))return ok(`Sorting... Done\n${pkg} — sample package available in demo catalog\n(This is a simulation)`);return ok('Sorting... Done\n(no packages found in limited demo catalog)');}if(['update','install'].includes(args[0]))return no('On a real Ubuntu machine, this task generally requires sudo. Try sudo apt '+args.join(' '));return no('Try apt search nano.');}
+    case 'nano':{return args[0]==='--version'&&installed.has('nano')?ok('GNU nano (simulated demo version)'):no('nano is not available here. Try sudo apt install nano in the demo.');}
+    case 'man':{if(!args[0])return no('Usage: man command');const item=commandGuide.find(g=>g[0]===args.join(' ')||g[0]===args[0]);return item?ok(`${item[0]} — ${item[1]}\nExample: ${item[2]}\n${item[3]}`):no('No short manual found for this command.');}
+    case 'history':return ok(terminalHistory.map((v,i)=>`${String(i+1).padStart(3)}  ${v}`).join('\n')||'(no commands yet)');
+    case 'help':return ok('Supported: pwd, whoami, uname, ls, cd, mkdir, touch, cat, cp, mv, rm, rmdir, echo, grep, find, chmod, apt search, sudo apt update/install, sudo useradd, sudo systemctl start apache2, nano --version, vi, bash, ps, df -h, free -h, ssh, id, systemctl, curl http://localhost, man, history, clear.\nBash scripts: simple assignments, quoting, echo, for, while, until, case, if. All operations are simulated.');
+    case 'clear':output=[];return ok('');
+    default:return no(`${command}: command not supported by this practice lab. Type help for supported commands.`);
+  }
+}
+function currentSteps(){return Math.max(0,Math.min(lessons[progress.selected].steps.length,Number(progress.steps[progress.selected]||0)));}
+function completedCount(){return Object.values(progress.completed||{}).filter(Boolean).length;}
+function percent(){return Math.round(completedCount()/lessons.length*100);}
+function stepMatches(li,si,command,args){
+  const a=args.join(' ');const inDoc=cwd===HOME+'/Documents';const exists=(p)=>!!fs[p];
+  switch(`${li}-${si}`){
+    case '0-0':return command==='pwd'&&cwd===HOME;
+    case '0-1':return command==='whoami';
+    case '0-2':return command==='uname'&&args.includes('-s');
+    case '1-0':return command==='ls'&&cwd===HOME;
+    case '1-1':return command==='cd'&&inDoc;
+    case '1-2':return command==='pwd'&&inDoc;
+    case '2-0':return command==='cd'&&inDoc;
+    case '2-1':return command==='mkdir'&&exists(HOME+'/Documents/LinuxLab');
+    case '2-2':return command==='touch'&&exists(HOME+'/Documents/LinuxLab/notes.txt');
+    case '3-0':return command==='cd'&&inDoc;
+    case '3-1':return command==='cp'&&exists(HOME+'/Documents/copy.txt')&&exists(HOME+'/Documents/hello.txt');
+    case '3-2':return command==='mv'&&exists(HOME+'/Documents/final.txt')&&!exists(HOME+'/Documents/copy.txt');
+    case '4-0':return command==='cat'&&args.some(x=>norm(x)===HOME+'/welcome.txt');
+    case '4-1':return command==='grep'&&args[0]==='Ubuntu'&&norm(args.at(-1))===HOME+'/welcome.txt';
+    case '4-2':return command==='ls'&&args.some(x=>x.startsWith('-')&&x.includes('a'))&&cwd===HOME;
+    case '5-0':return command==='cd'&&inDoc;
+    case '5-1':return command==='ls'&&args.some(x=>x.includes('l')&&x.startsWith('-'))&&args.some(x=>norm(x)===HOME+'/Documents/setup.sh');
+    case '5-2':return command==='chmod'&&a.startsWith('+x')&&fs[HOME+'/Documents/setup.sh']?.mode.includes('x');
+    case '6-0':return command==='apt'&&a==='search nano';
+    case '6-1':return command==='sudo'&&a==='apt update';
+    case '6-2':return command==='sudo'&&a==='apt install nano'&&installed.has('nano');
+    case '7-0':return command==='mkdir'&&exists(HOME+'/linux-project');
+    case '7-1':return command==='cd'&&cwd===HOME+'/linux-project';
+    case '7-2':return command==='touch'&&exists(HOME+'/linux-project/notes.txt');
+    case '7-3':return command==='echo'&&fs[HOME+'/linux-project/notes.txt']?.content.trim()==='Learning Linux';
+    case '7-4':return command==='cat'&&args.some(x=>norm(x)===HOME+'/linux-project/notes.txt')&&fs[HOME+'/linux-project/notes.txt']?.content.trim()==='Learning Linux';
+
+    case '8-0':return command==='uname'&&args.includes('-s');
+    case '8-1':return command==='cat'&&args.some(x=>norm(x)==='/etc/os-release');
+    case '8-2':return command==='pwd'&&cwd===HOME;
+    case '9-0':return command==='vi'&&editor?.path===HOME+'/hello.sh';
+    case '9-1':return command==='vi-save'&&args[0]===HOME+'/hello.sh'&&scriptMatchesLesson(9,fs[HOME+'/hello.sh']?.content||'');
+    case '9-2':return command==='bash'&&args[0]==='hello.sh'&&lastScriptOutput==='Hello from vi';
+    case '10-0':return command==='vi'&&editor?.path===HOME+'/greet.sh';
+    case '10-1':return command==='vi-save'&&args[0]===HOME+'/greet.sh'&&scriptMatchesLesson(10,fs[HOME+'/greet.sh']?.content||'');
+    case '10-2':return command==='bash'&&args[0]==='greet.sh'&&lastScriptOutput==='Hello Linux';
+    case '11-0':return command==='vi'&&editor?.path===HOME+'/for-loop.sh';
+    case '11-1':return command==='vi-save'&&args[0]===HOME+'/for-loop.sh'&&scriptMatchesLesson(11,fs[HOME+'/for-loop.sh']?.content||'');
+    case '11-2':return command==='bash'&&args[0]==='for-loop.sh'&&lastScriptOutput==='Item 1\nItem 2\nItem 3';
+    case '12-0':return command==='vi'&&editor?.path===HOME+'/while-loop.sh';
+    case '12-1':return command==='vi-save'&&args[0]===HOME+'/while-loop.sh'&&scriptMatchesLesson(12,fs[HOME+'/while-loop.sh']?.content||'');
+    case '12-2':return command==='bash'&&args[0]==='while-loop.sh'&&lastScriptOutput==='Count: 1\nCount: 2\nCount: 3';
+    case '13-0':return command==='vi'&&editor?.path===HOME+'/menu.sh';
+    case '13-1':return command==='vi-save'&&args[0]===HOME+'/menu.sh'&&scriptMatchesLesson(13,fs[HOME+'/menu.sh']?.content||'');
+    case '13-2':return command==='bash'&&args[0]==='menu.sh'&&lastScriptOutput==='Starting';
+    case '14-0':return command==='vi'&&editor?.path===HOME+'/status.sh';
+    case '14-1':return command==='vi-save'&&args[0]===HOME+'/status.sh'&&scriptMatchesLesson(14,fs[HOME+'/status.sh']?.content||'');
+    case '14-2':return command==='bash'&&args[0]==='status.sh'&&lastScriptOutput==='Service is online';
+    case '15-0':return command==='ps';
+    case '15-1':return command==='df'&&a==='-h';
+    case '15-2':return command==='free'&&a==='-h';
+    case '16-0':return command==='vi'&&editor?.path===HOME+'/quotes.sh';
+    case '16-1':return command==='vi-save'&&args[0]===HOME+'/quotes.sh'&&scriptMatchesLesson(16,fs[HOME+'/quotes.sh']?.content||'');
+    case '16-2':return command==='bash'&&args[0]==='quotes.sh'&&lastScriptOutput==='$name\nHello Linux';
+    case '17-0':return command==='vi'&&editor?.path===HOME+'/until-loop.sh';
+    case '17-1':return command==='vi-save'&&args[0]===HOME+'/until-loop.sh'&&scriptMatchesLesson(17,fs[HOME+'/until-loop.sh']?.content||'');
+    case '17-2':return command==='bash'&&args[0]==='until-loop.sh'&&lastScriptOutput==='Count: 1\nCount: 2\nCount: 3';
+    case '18-0':return command==='ssh'&&a==='-V';
+    case '18-1':return command==='man'&&a==='ssh';
+    case '18-2':return command==='ssh'&&a==='student@lab.example';
+    case '19-0':return command==='id'&&args.length===0;
+    case '19-1':return command==='sudo'&&a==='useradd trainee'&&createdUsers.has('trainee');
+    case '19-2':return command==='id'&&a==='trainee'&&createdUsers.has('trainee');
+    case '20-0':return command==='sudo'&&a==='apt install apache2'&&installed.has('apache2');
+    case '20-1':return command==='sudo'&&a==='systemctl start apache2'&&servicesRunning.has('apache2');
+    case '20-2':return command==='systemctl'&&a==='is-active apache2'&&servicesRunning.has('apache2');
+    case '20-3':return command==='curl'&&a==='http://localhost'&&servicesRunning.has('apache2');
+    case '21-0':return command==='mkdir'&&exists(HOME+'/support-toolkit');
+    case '21-1':return command==='cd'&&cwd===HOME+'/support-toolkit';
+    case '21-2':return command==='vi'&&editor&&editor.path===HOME+'/support-toolkit/report.sh';
+    case '21-3':return command==='vi-save'&&fs[HOME+'/support-toolkit/report.sh']?.content.startsWith('#!/bin/bash')&&/case\s+/.test(fs[HOME+'/support-toolkit/report.sh'].content)&&runBashSubset(fs[HOME+'/support-toolkit/report.sh'].content).msg==='Checking Apache2';
+    case '21-4':return command==='bash'&&args.length===1&&norm(args[0])===HOME+'/support-toolkit/report.sh'&&lastScriptOutput==='Checking Apache2';
+    case '21-5':return command==='ps';
+    case '21-6':return command==='df'&&args.join(' ')==='-h';
+    default:return false;
+  }
+}
+function transferMatches(id,raw,res){
+  const cmd=res.command,args=res.args;
+  const name=args[0]||'';
+  const has=(path)=>!!fs[path];
+  const paths={9:'hello.sh',10:'greet.sh',11:'for-loop.sh',12:'while-loop.sh',13:'menu.sh',14:'status.sh',16:'quotes.sh',17:'until-loop.sh',21:'report.sh'};
+  if(Object.prototype.hasOwnProperty.call(paths,id)){
+    const path=(id===21?HOME+'/support-toolkit/':HOME+'/')+paths[id];
+    const expected={9:'Edited in vi',10:'Hello Ubuntu',11:'Item 4\nItem 5\nItem 6',12:'Count: 2\nCount: 3',13:'Stopping',14:'Service is offline',16:'$name\nHello Ubuntu',17:'Count: 2\nCount: 3',21:'Unknown service'};
+    if(cmd!=='bash'||args.length!==1||norm(name)!==path||!has(path))return false;
+    const src=fs[path].content,run=runBashSubset(src);
+    const syntactic={9:/echo\s+Edited in vi/,10:/name=["']Ubuntu["']/,11:/for\s+\w+\s+in\s+4 5 6;/,12:/count=2/,13:/choice=["']stop["']/,14:/status=["']offline["']/,16:/name=["']Ubuntu["']/,17:/count=2/,21:/service=["']ssh["']/};
+    const structural=id===21?/case\s+[\s\S]+\s+in/:/[\s\S]*/;
+    return src.startsWith('#!/bin/bash')&&syntactic[id].test(src)&&structural.test(src)&&run.ok&&run.msg===expected[id];
+  }
+  switch(id){
+    case 0:return cmd==='ls'&&cwd===HOME;
+    case 8:return cmd==='whoami'&&res.msg==='student';
+    case 1:return cmd==='cd'&&cwd===HOME+'/Desktop';
+    case 2:return cmd==='touch'&&has(HOME+'/Documents/LinuxLab/practice.txt');
+    case 3:return cmd==='cp'&&has(HOME+'/Documents/backup.txt')&&has(HOME+'/Documents/hello.txt');
+    case 4:return cmd==='grep'&&args[0]==='Linux'&&norm(args.at(-1))===HOME+'/welcome.txt';
+    case 5:return cmd==='ls'&&args.some(x=>x.startsWith('-')&&x.includes('l'))&&args.some(x=>norm(x)===HOME+'/Documents/setup.sh')&&fs[HOME+'/Documents/setup.sh']?.mode==='-rwxr-xr-x';
+    case 6:return cmd==='nano'&&args[0]==='--version'&&installed.has('nano');
+    case 7:return cmd==='grep'&&args[0]==='Learning'&&norm(args.at(-1))===HOME+'/linux-project/notes.txt';
+    case 15:return cmd==='ps'&&args.includes('-ef');
+    case 19:return cmd==='id'&&args.length===1&&args[0]==='student';
+    case 18:return cmd==='ssh'&&args.length===1&&args[0]==='learner@practice.example';
+    case 20:return cmd==='systemctl'&&args.join(' ')==='status apache2'&&servicesRunning.has('apache2');
+    default:return false;
+  }
+}
+function runCommand(raw){raw=raw.trim();if(!raw)return;terminalHistory.push(raw);historyIndex=terminalHistory.length;push('input',raw);const before=currentSteps();const res=execute(raw);if(res.msg)push(res.ok?'output':'error',res.msg);if(res.ok&&progress.view==='learn'&&!progress.completed[progress.selected]&&before<lessons[progress.selected].steps.length&&stepMatches(progress.selected,before,res.command,res.args)){progress.steps[progress.selected]=before+1;push('success',`✓ Guided step ${before+1} complete!`);currentHint=-1;}
+  else if(res.ok&&progress.view==='learn'&&!progress.transfer[progress.selected]&&before===lessons[progress.selected].steps.length&&transferMatches(progress.selected,raw,res)){progress.transfer[progress.selected]=true;push('success','✓ Independent challenge passed. You did the new task yourself!');soloHint=false;}
+  snapshotCurrent();save();render();const inp=document.getElementById('command-input');if(inp)inp.focus({preventScroll:true});const out=document.getElementById('terminal-output');if(out)out.scrollTop=out.scrollHeight;
+}
+function selectLesson(i){if(i<0||i>=lessons.length)return;snapshotCurrent();progress.selected=i;progress.view='learn';currentHint=-1;soloHint=false;quizWrong=false;restoreCurrent();save();render();document.getElementById('learning-path')?.scrollIntoView({behavior:'smooth',block:'start'});}
+function changeView(view){snapshotCurrent();progress.view=view;currentHint=-1;soloHint=false;quizWrong=false;restoreCurrent();save();render();window.scrollTo({top:0,behavior:'smooth'});}
+function checkQuiz(i){if(progress.completed[progress.selected])return;const id=progress.selected,quiz=lessons[id].quiz;if(currentSteps()<lessons[id].steps.length||!progress.transfer[id]||!progress.predictions[id])return;if(Number(i)===quiz.correct){progress.completed[id]=true;progress.steps[id]=lessons[id].steps.length;quizWrong=false;push('success','✓ Lesson completed: prediction, guided work, independent task, and exit check!');snapshotCurrent();save();}else{quizWrong=true;}render();}
+function answerPrediction(choice){const id=progress.selected,model=teaching[id];if(progress.predictions[id])return;progress.predictions[id]={choice,correct:choice===model.correct};save();render();}
+function toggleReview(id){progress.review[id]=!progress.review[id];save();render();}
+function reviewCount(){return Object.values(progress.review).filter(Boolean).length;}
+
+function nav(){const tabs=[['learn','Course'],['scenarios','Work scenarios'],['play','Practice terminal'],['guide','Commands'],['review','My review']];return `<header class="top"><div class="brand" aria-label="Teach Me Linux"><div class="brand-mark" aria-hidden="true">&gt;_</div><div><div class="brand-title">Teach Me Linux</div><div class="brand-sub">UBUNTU · LEARNING LAB</div></div></div><nav class="topnav" aria-label="Main navigation">${tabs.map(([v,label])=>`<button type="button" class="navbtn ${progress.view===v?'active':''}" data-view="${v}" ${progress.view===v?'aria-current="page"':''}>${label}${v==='review'&&reviewCount()?' ('+reviewCount()+')':''}</button>`).join('')}</nav><div class="top-prog"><span class="circle">${completedCount()}</span><span>${completedCount()}/${lessons.length} labs</span></div></header>`;}
+function hero(){return `<section class="hero" aria-label="Welcome"><div><div class="eyebrow">LEARN IT. TRY IT. UNDERSTAND IT.</div><h1>Learn Linux like you're <em>in a great classroom.</em></h1><p>Start with a question, watch an example, practice with guidance, and then prove you can solve a new problem on your own.</p><div class="hero-actions"><button class="btn primary" data-action="start">${completedCount()===0?'Begin the course':'Continue learning'} <span aria-hidden="true">→</span></button><button class="btn ghost" data-view="review">Open your study review</button></div><div class="trustrow"><span><b>✓</b> ${lessons.length} practical labs</span><span><b>✓</b> Instructor-style feedback</span><span><b>✓</b> Real-world VM extensions</span><span><b>✓</b> No signup</span></div></div><div class="hero-art" aria-hidden="true"><div class="terminal-top"><div class="dots"><i></i><i></i><i></i></div><span>Ubuntu · guided demonstration</span><span>⌘</span></div><div class="art-terminal"><div><span class="prompt">student@ubuntu:~$</span> <span class="cmd">pwd</span></div><div class="result">/home/student</div><div><span class="prompt">student@ubuntu:~$</span> <span class="cmd">ls</span></div><div class="result">Desktop &nbsp; Documents &nbsp; Downloads</div><div><span class="prompt">student@ubuntu:~$</span> <span class="cmd">echo "I can do this"</span></div><div class="highlight">I can do this</div><div><span class="prompt">student@ubuntu:~$</span> <span class="cmd">▌</span></div><span class="art-label">TEACH → PRACTICE → PROVE</span></div></div></section>`;}
+function lessonSidebar(){return `<aside class="lesson-list" aria-label="Choose a lesson">${courseUnits.map((unit,n)=>`<div class="side-unit"><div class="side-unit-title"><span>UNIT ${String(n+1).padStart(2,'0')}</span><strong>${esc(unit.title)}</strong><small>${unit.ids.filter(i=>progress.completed[i]).length}/${unit.ids.length}</small></div>${unit.ids.map(i=>{const l=lessons[i],done=Boolean(progress.completed[i]),active=progress.selected===i;return `<button type="button" data-lesson="${i}" class="lesson-item ${done?'done':''} ${active?'active':''}" ${active?'aria-current="step"':''}><span class="lesson-num">${done?'✓':String(lessonOrder.indexOf(i)+1).padStart(2,'0')}</span><span class="lesson-text"><b>${esc(l.title)}</b><small>${esc(l.short)}</small></span><span class="lesson-status" aria-hidden="true">${done?'✓':active?'›':''}</span></button>`;}).join('')}</div>`).join('')}</aside>`;}
+function termMarkup(){if(editor)return editorMarkup();return `<section class="terminal-zone" aria-label="Practice terminal"><div class="terminal-head"><div><strong>● Ubuntu practice terminal</strong><small> &nbsp;| &nbsp; simulated shell</small></div><div class="terminal-controls"><button class="tiny" type="button" data-action="reset-sim" title="Start a fresh simulated filesystem">Reset lab</button><button class="tiny" type="button" data-action="help">Help</button></div></div><div id="terminal-output" class="terminal-output" role="log" aria-label="Terminal output" aria-live="polite">${output.map(line=>line.type==='input'?`<div class="line input"><span class="ps1">student@ubuntu:${esc((line.at||cwd).replace(HOME,'~'))}$</span> ${esc(line.text)}</div>`:`<div class="line ${line.type}">${esc(line.text)}</div>`).join('')}</div><form class="terminal-form" id="terminal-form" autocomplete="off"><label for="command-input">student@ubuntu:${esc(cwd.replace(HOME,'~'))}$</label><input id="command-input" name="command" type="text" enterkeyhint="go" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Linux command" placeholder="Type a command…" /><button class="run-btn" type="submit">Run ↵</button></form><div class="terminal-foot"><span><i class="safedot"></i>Safe virtual lab · no real commands executed</span><span>↑ ↓ for history</span></div></section>`;}
+function stepsMarkup(l){const done=currentSteps();return `<div class="steps">${l.steps.map((s,i)=>{const d=i<done,active=i===done,locked=i>done;return `<div class="step ${d?'complete':''} ${active?'current':''} ${locked?'locked':''}"><span class="step-dot">${d?'✓':i+1}</span><div class="step-text"><strong>${esc(s.text)}</strong><div class="note">${esc(s.note)}</div>${active&&!progress.completed[progress.selected]?`<button type="button" class="hintbtn" data-action="hint">${currentHint===i?'Hide hint':'Show hint'}</button>${currentHint===i?`<div class="hintline">${s.hint.includes('\n')?`<span>Example script:</span><pre class="script-example">${esc(s.hint)}</pre><button type="button" class="tiny" data-action="vi-load-example" ${editor?'':'disabled'}>Load example into editor</button>`:`Try <code>${esc(s.hint)}</code> <button type="button" class="tiny" data-fill="${esc(s.hint)}">Insert command</button>`}</div>`:''}`:''}</div></div>`;}).join('')}</div>`;}
+function quizMarkup(l){if(currentSteps()<l.steps.length)return'';const completed=Boolean(progress.completed[progress.selected]);return `<section class="quiz"><div class="eyebrow">QUICK KNOWLEDGE CHECK</div><h3>${esc(l.quiz.q)}</h3><p>Pick the best answer to ${completed?'review your result.':'finish the lab.'}</p><div class="quiz-choices">${l.quiz.options.map((opt,i)=>`<button type="button" ${completed?'disabled':''} class="${completed&&i===l.quiz.correct?'correct':''}" data-quiz="${i}">${esc(opt)}${completed&&i===l.quiz.correct?' ✓':''}</button>`).join('')}</div>${completed?`<div class="quiz-feedback good">✓ ${esc(l.quiz.why)}</div>`:quizWrong?`<div class="quiz-feedback">Not quite. Try another answer — you can do it.</div>`:''}</section>`;}
+function unitMap(){return `<div class="unit-map" aria-label="Course units">${courseUnits.map((u,n)=>{let count=u.ids.filter(i=>progress.completed[i]).length;return `<button type="button" class="unit-card ${u.ids.includes(progress.selected)?'unit-current':''}" data-lesson="${u.ids[0]}"><span class="unit-n">UNIT ${String(n+1).padStart(2,'0')} <span>${count}/${u.ids.length} complete</span></span><strong>${esc(u.title)}</strong><span class="unit-target">${esc(u.goal)}</span><span class="unit-meter"><span style="width:${Math.round(count/u.ids.length*100)}%"></span></span></button>`;}).join('')}</div>`;}
+function stageStrip(id){let guided=currentSteps()===lessons[id].steps.length;const parts=[['01','Think',Boolean(progress.predictions[id])],['02','Understand',Boolean(progress.predictions[id])],['03','Practice',guided],['04','Prove',Boolean(progress.transfer[id])],['05','Exit',Boolean(progress.completed[id])]];return `<div class="stage-strip" aria-label="Lesson learning cycle">${parts.map(([n,t,done])=>`<span class="stage-pill ${done?'stage-done':''}"><span>${done?'✓':n}</span>${t}</span>`).join('')}</div>`;}
+function predictionMarkup(id){const t=teaching[id],record=progress.predictions[id];return `<section class="teach-panel" id="lesson-think"><div class="section-kicker"><span class="step-label">01</span><span>THINK FIRST</span></div><h3>Make a prediction</h3><p class="panel-intro">${esc(t.predict)}</p><div class="predict-choices">${t.answers.map((v,i)=>`<button type="button" data-predict="${i}" ${record?'disabled':''} class="predict-choice ${record&&i===t.correct?'correct':''} ${record&&i===record.choice&&i!==t.correct?'incorrect':''}"><span>${String.fromCharCode(65+i)}</span>${esc(v)}</button>`).join('')}</div>${record?`<div class="formative-feedback ${record.correct?'good':''}" role="status"><strong>${record.correct?'✓ Correct reasoning':'Good attempt — here is the key idea'}</strong><p>${esc(t.predictionWhy)}</p></div>`:`<p class="micro-hint">No grade here. Guess, then learn from the explanation.</p>`}</section>`;}
+function exampleMarkup(id){const t=teaching[id],ready=Boolean(progress.predictions[id]);return `<section class="teach-panel ${ready?'':'soft-locked'}" id="lesson-explain"><div class="section-kicker"><span class="step-label">02</span><span>MINI LESSON</span></div><h3>Watch the idea work</h3>${ready?`<p class="panel-intro">${esc(t.why)}</p><div class="example-grid"><div><div class="code-caption">EXAMPLE</div><pre class="teacher-code">${esc(t.example)}</pre></div><div><div class="code-caption">EXPECTED RESULT / IDEA</div><pre class="teacher-code result-code">${esc(t.output)}</pre></div></div><p class="teacher-explain">${esc(t.explain)}</p><div class="pitfall"><strong>Common mistake</strong><p>${esc(t.mistake)}</p><strong>How to fix it</strong><p>${esc(t.repair)}</p></div>`:`<p class="panel-intro">Answer the prediction above to unlock the worked example and explanation.</p>`}</section>`;}
+function independentMarkup(id){const t=teaching[id],done=Boolean(progress.transfer[id]),ready=currentSteps()===lessons[id].steps.length;return `<section class="teach-panel ${ready?'':'soft-locked'}" id="lesson-solo"><div class="section-kicker"><span class="step-label">04</span><span>YOU TRY — INDEPENDENTLY</span></div><div class="solo-heading"><h3>A new problem, no copy-paste answer</h3><span class="tag ${done?'green':'gray'}">${done?'✓ VERIFIED':'SOLO CHALLENGE'}</span></div>${ready?`<p class="panel-intro">${esc(t.solo)}</p>${done?`<div class="formative-feedback good"><strong>✓ Independent task verified</strong><p>You applied the idea to a different problem. Continue to your exit ticket below.</p></div>`:`<p class="micro-hint">Use the terminal or vi editor above. This is checked from what your simulated environment actually does, not just the command text.</p><button type="button" data-action="solo-hint" class="hintbtn">${soloHint?'Hide a coaching hint':'I need a hint'}</button>${soloHint?`<p class="teacher-explain">${esc(t.soloHint)}</p>`:''}`}`:`<p class="panel-intro">Finish the guided steps first. Then you'll do a related task independently.</p>`}</section>`;}
+function exitMarkup(l,id){const ready=Boolean(progress.predictions[id])&&currentSteps()===l.steps.length&&Boolean(progress.transfer[id]);const completed=Boolean(progress.completed[id]);return `<section class="teach-panel ${ready?'':'soft-locked'}" id="lesson-exit"><div class="section-kicker"><span class="step-label">05</span><span>EXIT TICKET</span></div><h3>Can you explain what you did?</h3>${ready?`<div class="quiz exit-quiz"><h4>${esc(l.quiz.q)}</h4><p>Answer this to complete the lesson. You can retry without penalties.</p><div class="quiz-choices">${l.quiz.options.map((opt,i)=>`<button type="button" ${completed?'disabled':''} class="${completed&&i===l.quiz.correct?'correct':''}" data-quiz="${i}">${esc(opt)}${completed&&i===l.quiz.correct?' ✓':''}</button>`).join('')}</div>${completed?`<div class="quiz-feedback good" role="status">✓ ${esc(l.quiz.why)}</div>`:quizWrong?`<div class="quiz-feedback" role="status">Not quite. Think about the main concept and try another answer.</div>`:''}</div>`:`<p class="panel-intro">Finish the guided activity and the independent challenge to unlock your final check.</p>`}</section>`;}
+function lessonDetail(){const id=progress.selected,l=lessons[id],t=teaching[id],done=Boolean(progress.completed[id]),u=getUnit(id);return `<article class="detail"><div class="detail-header"><div class="detail-top"><span class="tag ${done?'green':''}">${done?'✓ LESSON COMPLETED':esc(l.level)}</span><span class="tag gray">◷ ${esc(l.time)}</span></div><p class="lesson-unit-name">${esc(u?.title||'')}</p><h2>${String(lessonOrder.indexOf(id)+1).padStart(2,'0')}. ${esc(l.title)}</h2><p class="detail-desc">${esc(l.subtitle)}</p>${progress.priorCompleted[id]&&!done?'<p class="prior-credit">Previously finished in an earlier beta · Complete the new independent challenge to earn this course version’s completion.</p>':''}<div class="learning-objective"><span class="objective-icon">◎</span><div><strong>By the end of this lesson, you can…</strong><p>${esc(t.objective)}</p></div></div>${stageStrip(id)}<nav class="lesson-jump" aria-label="Jump within lesson"><a href="#lesson-think">Predict</a><a href="#lesson-explain">Learn</a><a href="#lesson-practice">Guided lab</a><a href="#lesson-solo">Independent task</a><a href="#lesson-exit">Exit ticket</a></nav><div class="preflight"><span>Before you begin:</span> ${id===0?'No experience needed. Start here.':`You can review <button type="button" class="inline-link" data-lesson="${lessonOrder[Math.max(0,lessonOrder.indexOf(id)-1)]}">${esc(lessons[lessonOrder[Math.max(0,lessonOrder.indexOf(id)-1)]].title)}</button> first.`}<button type="button" class="review-toggle ${progress.review[id]?'saved':''}" data-review="${id}">${progress.review[id]?'★ In your review list':'☆ Save for review'}</button></div></div><div class="detail-body">
+ ${predictionMarkup(id)}${exampleMarkup(id)}
+ <section class="teach-panel" id="lesson-practice"><div class="section-kicker"><span class="step-label">03</span><span>GUIDED LAB</span></div><div class="mission-title"><h3>Practice with feedback</h3><span>${currentSteps()} of ${l.steps.length} steps</span></div><p class="panel-intro">${l.concept} <strong>${esc(t.why)}</strong></p><p class="micro-hint">Commands are evaluated inside a safe imitation of Ubuntu. This is not connected to your computer.</p>${stepsMarkup(l)}<div class="terminal-wrap"><div class="code-caption">YOUR PRACTICE WORKSPACE</div>${termMarkup()}</div></section>
+ ${independentMarkup(id)}${exitMarkup(l,id)}
+ <section class="teach-panel vm-panel"><div class="section-kicker"><span class="step-label icon-step">⌘</span><span>TAKE IT TO REAL UBUNTU</span></div><h3>From simulation to a real VM</h3><p>${esc(t.vm)}</p><div class="vm-warning">Use a personal or authorized training VM. Our browser simulation behaves differently from real Ubuntu and never changes system users, packages, or services.</div></section>
+ <section class="teach-panel notes-panel"><div class="section-kicker"><span class="step-label icon-step">✎</span><span>STUDY NOTEBOOK</span></div><h3>What will you remember?</h3><label class="note-label" for="lesson-note">Your notes stay on this device. Write a command, one question, or something to review.</label><textarea id="lesson-note" placeholder="Example: cd .. moves to the parent directory…" rows="3">${esc(progress.notes[id]||'')}</textarea></section>
+ ${done?`<div class="finish"><div><b>✓ Lesson complete</b><small>You've practiced, transferred the skill, and passed the exit ticket.</small></div>${nextLesson(id)!==undefined?`<button class="btn primary small" data-lesson="${nextLesson(id)}">Next lesson →</button>`:`<button class="btn primary small" data-view="review">Review your course →</button>`}</div>`:''}
+ </div></article>`;}
+function learnMarkup(){return `${hero()}<section class="install-cta" aria-label="Install app"><div class="install-copy"><b>📱 Use Teach Me Linux like an app</b><span>Open it from your Home Screen—no App Store or ZIP downloads.</span></div><button class="btn small" type="button" data-action="install-pwa">How to install</button></section><section id="learning-path"><div class="course-heading"><div><h2 class="section-title">Your Ubuntu course</h2><p class="section-sub">A complete, instructor-style path from first command to final support project.</p></div><button class="btn small" data-view="review">Study review (${reviewCount()}) →</button></div><div class="progresspanel"><div><h3>${completedCount()===lessons.length?'Course complete — great work!':'Your learning progress'}</h3><p>${completedCount()} of ${lessons.length} lessons completed · ${reviewCount()} saved for review · Stored in this browser</p></div><div role="progressbar" aria-valuenow="${percent()}" aria-valuemin="0" aria-valuemax="100" aria-label="Course progress" class="progressbar"><span style="width:${percent()}%"></span></div></div>${unitMap()}<div class="mobile-lesson-picker"><label for="course-lesson-select">Jump to a lesson</label><select id="course-lesson-select" aria-label="Choose a lesson">${courseUnits.map((u,n)=>`<optgroup label="Unit ${n+1}: ${esc(u.title)}">${u.ids.map(i=>`<option value="${i}" ${i===progress.selected?'selected':''}>${String(lessonOrder.indexOf(i)+1).padStart(2,'0')} · ${esc(lessons[i].title)} ${progress.completed[i]?'✓':''}</option>`).join('')}</optgroup>`).join('')}</select></div><div class="lesson-layout">${lessonSidebar()}${lessonDetail()}</div></section>`;}
+function playMarkup(){return `<div class="page-heading"><div class="eyebrow">YOUR OWN PRACTICE SPACE</div><h1>Terminal playground</h1><p>Experiment without worrying about your files. This is a learning simulator, not a full Ubuntu machine. Reset anytime.</p></div><div class="playground-layout"><div>${termMarkup()}<div class="danger-note">Real Linux commands affect real computers. Especially double-check <code>sudo</code>, <code>rm</code>, and scripts before you use them outside this app.</div></div><aside><div class="card"><h2>Don't know what to type?</h2><p>Tap a sample below to insert it into your terminal. Then press Run.</p><div class="quick-buttons">${['pwd','ls','cd Documents','ls -l','cat hello.txt','cd ..','whoami','help'].map(s=>`<button type="button" data-fill="${esc(s)}">${esc(s)}</button>`).join('')}</div></div><div class="card note"><h2>How this works</h2><p>You're practicing in a tiny virtual filesystem that starts at <code>/home/student</code>. The app understands a selected set of commands.</p><p>For full Linux programs, package installations, or advanced features, use a real Ubuntu installation or your own Ubuntu virtual machine.</p><button class="btn small" data-view="guide">See command guide →</button></div></aside></div>`;}
+function guideMarkup(){const term=guideSearch.trim().toLowerCase(),items=commandGuide.filter(x=>x.join(' ').toLowerCase().includes(term));return `<div class="page-heading"><div class="eyebrow">THE CHEAT SHEET YOU'LL ACTUALLY USE</div><h1>Command guide</h1><p>Quick references for common Linux commands, with Ubuntu-specific examples. Search a command or a task.</p></div><div class="guide-tools"><input aria-label="Search command guide" class="searchbox" id="guide-search" placeholder="Try: files, install, pwd, permissions…" value="${esc(guideSearch)}"/><span style="color:var(--muted);font-size:12px">${items.length} commands found</span></div>${items.length?`<div class="guide-grid">${items.map(x=>`<article class="guide-card"><h3>${esc(x[0])}</h3><p>${esc(x[1])}</p><code>${esc(x[2])}</code><small>${esc(x[3])}</small>${['bash','for','while','until','case','if'].includes(x[0])?`<button class="tiny" type="button" data-lesson="${({bash:10,for:11,while:12,until:17,case:13,if:14})[x[0]]}">Open guided lesson ↗</button>`:`<button class="tiny" type="button" data-practice="${esc(x[2])}">Try in terminal ↗</button>`}</article>`).join('')}</div>`:`<div class="empty">No commands match that search. Try a different word.</div>`}`;}
+function reviewMarkup(){const saved=lessonOrder.filter(i=>progress.review[i]);const needs=lessonOrder.filter(i=>progress.predictions[i]&&!progress.predictions[i].correct&&!progress.completed[i]&&!progress.review[i]);return `<div class="page-heading"><div class="eyebrow">YOUR PERSONAL STUDY SPACE</div><h1>Review what matters</h1><p>Good students revisit tough concepts. Bookmark lessons, check where you guessed incorrectly, and keep quick notes for later.</p></div><div class="review-overview"><div class="card"><strong>${completedCount()} / ${lessons.length}</strong><span>Lessons completed</span></div><div class="card"><strong>${saved.length}</strong><span>Saved to review</span></div><div class="card"><strong>${needs.length}</strong><span>Unfinished warm-ups to revisit</span></div></div><div class="course-heading"><div><h2 class="section-title">Your review list</h2><p class="section-sub">Open any lesson to practice again or update your notes.</p></div></div>${saved.length?`<div class="review-list">${saved.map(i=>`<article class="review-card"><div><strong>${esc(lessons[i].title)}</strong><p>${esc(teaching[i].objective)}</p>${progress.notes[i]?`<p class="review-note">Note: ${esc(progress.notes[i])}</p>`:''}</div><div class="review-actions"><button type="button" class="btn small" data-lesson="${i}">Study lesson</button><button type="button" class="tiny" data-review="${i}">Remove</button></div></article>`).join('')}</div>`:`<div class="empty-review"><strong>No lessons saved yet.</strong><p>When you hit a tough topic, tap ☆ Save for review in the lesson. It will appear here.</p><button type="button" class="btn primary" data-view="learn">Back to course →</button></div>`}${needs.length?`<h2 class="section-title" style="margin-top:28px">Topics worth another look</h2><div class="review-list">${needs.map(i=>`<div class="review-card"><div><strong>${esc(lessons[i].title)}</strong><p>You missed the prediction, and this lesson is still unfinished. That's useful feedback, not a grade.</p></div><button class="btn small" data-lesson="${i}">Review idea →</button></div>`).join('')}</div>`:''}<div class="card note" style="margin-top:20px"><h2>Learning record</h2><p>This is your own study notebook, not a school gradebook. Progress and notes are stored locally in this browser only. They are not synced between devices.</p></div>`;}
+// Workplace simulation: intentionally restricted, fictional data only.
+// This has its own state and does not execute system commands or reach a network.
+const scenarioCatalog=[
+  {id:'opening',type:'INCIDENT RESPONSE',short:'Service outage',title:'The storefront is down. Doors open soon.',role:'On-call Linux support technician',duration:'15–20 minutes',difficulty:'Intermediate',
+    ticket:'INC-204 · Storefront operations',context:'A retail team needs its internal ordering dashboard available before opening. The web service fails its health check after an overnight deployment. You have authority to inspect it and correct its local file permissions.',
+    mission:'Find the cause from logs, apply the smallest safe fix, restart the service, and prove the health check works.',
+    evidence:'Simulated command output reflects actual scenario state. A service restart alone will not fix the underlying problem.',
+    hint:['Start with systemctl status storefront, then read journalctl -u storefront -n 10.','The service reads /srv/storefront/config.env. Check its owner and mode with ls -l.','The service account is storefront. Use sudo chown storefront:storefront /srv/storefront/config.env and sudo chmod 640 /srv/storefront/config.env. Then restart and verify with curl http://localhost/health.'],
+    debrief:'The outage was caused by a configuration file owned by root with restrictive permissions. Opening it to everyone (chmod 777) would be a poor fix. We restored only the access the service needed, restarted it, and checked the actual HTTP health endpoint.',
+    realWorld:'In a real incident, check the change window and escalation path, review logs, make a backup if configuration changes are needed, confirm service dependencies, and communicate recovery. This browser lab changes no real services.'},
+  {id:'startup',type:'BUILD FOR A CLIENT',short:'Startup automation',title:'A startup needs an urgent-request router.',role:'Junior automation developer',duration:'20–25 minutes',difficulty:'Intermediate',
+    ticket:'DEV-108 · Small-team operations',context:'A growing startup receives support requests and wants a small Bash program to classify them. The operations lead has given you three acceptance criteria and needs a working script before the next shift.',
+    mission:'Complete a Bash case statement, test the urgent and normal paths, and handle anything unknown without silently dropping it.',
+    evidence:'Acceptance tests supply different inputs to your script. You will not pass by hardcoding a single output.',
+    hint:['The priority variable is supplied by the test harness. Do not replace it with a fixed assignment.','Use case "$priority" in, with separate urgent), normal), and *) branches. Each branch ends with ;;.','Required outputs: urgent → Escalate immediately, normal → Queue for today, anything else → Review manually. Close with esac.'],
+    debrief:'This is a tiny example of requirements-driven development: clarify inputs and expected outputs, implement decisions, and test a normal case, an urgent case, and a fallback. A more mature startup would also add input validation, logging, automated tests, and error handling.',
+    realWorld:'The editor and Bash subset are simulated. On a real Ubuntu VM, put the script in a test directory, run shellcheck if available, and test inputs without using production customer information.'},
+  {id:'staffing',type:'ACCESS MANAGEMENT',short:'Staff changes',title:'Staff turnover: secure the Linux accounts.',role:'IT administrator following an approved change ticket',duration:'25–30 minutes',difficulty:'Advanced',
+    ticket:'CHG-2048 · People operations',context:'Avery has left the company. Casey needs a new account with read/traverse access to the reports directory only. Blair has an approved on-call responsibility to restart one service. The team must be ready for tomorrow without excessive privileges.',
+    mission:'Expire the departing account, revoke its privileged groups, create and limit the new account, tighten folder permissions, and apply an approved service-only privilege.',
+    evidence:'The simulated policy file is pre-approved: the deployers group may restart the storefront service, but it does not have blanket sudo access. Changes must be verified, not assumed.',
+    hint:['Inspect id avery, id blair, and ls -ld /srv/reports. Then review cat /etc/sudoers.d/deployers.','Use sudo usermod --expiredate 1 avery and sudo gpasswd -d avery sudo / finance. Merely locking a password may not stop SSH-key authentication.','Create Casey with sudo useradd -m casey, add only the reports group using sudo usermod -aG reports casey. Set the folder group with sudo chgrp reports /srv/reports and mode with sudo chmod 750 /srv/reports. Add Blair to deployers, not sudo.'],
+    debrief:'This change demonstrates least privilege and verification. Account expiration blocks local authentication; group removal revokes role memberships; reports receives group-only access; and the preapproved deployers group permits just one operational command. Real offboarding still requires SSO/session/token/SSH-key checks in the relevant systems.',
+    realWorld:'These are fictional accounts. Never execute staff-offboarding commands on a real machine without authorization, review of dependencies and ownership, a documented approval, and a rollback/escalation plan. Local Linux actions do not automatically revoke cloud sessions.'}
+];
+const scenarioStarter=`#!/bin/bash
+# The test provides $priority: urgent, normal, or something else.
+# Finish the branches; do not assign priority yourself.
+case "$priority" in
+  urgent) echo "Escalate immediately" ;;
+  # TODO: handle normal requests
+  # TODO: handle unknown requests
+esac`;
+function scenarioSeed(id){
+  const base={id,log:[{kind:'system',text:'Sandbox loaded. This is a fictional workplace environment; no real systems or accounts are touched.'}],coaching:-1,attempts:0,verified:false};
+  if(id==='opening')return {...base,owner:'root:root',mode:'600',service:'failed',sawLogs:false,sawStatus:false,healthChecked:false};
+  if(id==='startup')return {...base,script:scenarioStarter,tests:{},lastTest:'',readBrief:true};
+  return {...base,users:{avery:{expired:false,groups:['staff','sudo','finance'],passwordLocked:false},blair:{expired:false,groups:['staff']}},folderGroup:'root',folderMode:'755',policySeen:false,verifiedChecks:{},auditCount:0};
+}
+function scenarioState(id=progress.scenarioSelected||'opening'){
+  if(!progress.scenarios||typeof progress.scenarios!=='object'||Array.isArray(progress.scenarios))progress.scenarios={};
+  if(!progress.scenarios[id]||progress.scenarios[id].id!==id)progress.scenarios[id]=scenarioSeed(id);
+  return progress.scenarios[id];
+}
+function scenarioById(id){return scenarioCatalog.find(c=>c.id===id)||scenarioCatalog[0]}
+function scenarioGoals(id,s){
+  if(id==='opening')return [
+    {label:'Inspect service status',ok:!!s.sawStatus},
+    {label:'Read the failure log',ok:!!s.sawLogs},
+    {label:'Restore owner and group',ok:s.owner==='storefront:storefront'},
+    {label:'Secure file permissions',ok:s.mode==='640'},
+    {label:'Restart and confirm service health',ok:s.service==='running'&&s.healthChecked}
+  ];
+  if(id==='startup')return [
+    {label:'Urgent request handled',ok:!!s.tests.urgent},
+    {label:'Normal request handled',ok:!!s.tests.normal},
+    {label:'Unknown request handled safely',ok:!!s.tests.unknown},
+    {label:'All branches in one case statement',ok:validStartupStructure(s.script)}
+  ];
+  const av=s.users.avery||{},bl=s.users.blair||{},ca=s.users.casey||{};
+  return [
+    {label:'Former employee account expired',ok:!!av.expired},
+    {label:'Former employee removed from sudo and finance',ok:!av.groups?.includes('sudo')&&!av.groups?.includes('finance')},
+    {label:'New account created, without admin rights',ok:!!ca.groups&&!ca.groups.includes('sudo')},
+    {label:'New hire has only the reports access required',ok:!!ca.groups?.includes('reports')&&ca.groups.length===1&&s.folderGroup==='reports'&&s.folderMode==='750'},
+    {label:'Approved, service-only elevation applied',ok:!!s.policySeen&&bl.groups?.includes('deployers')&&!bl.groups?.includes('sudo')},
+    {label:'Read back account, expiry, and folder state',ok:['avery','casey','blair','expiry','folder'].every(x=>s.verifiedChecks?.[x])}
+  ];
+}
+function validStartupStructure(src){return typeof src==='string'&&src.length<=12000&&/^#!\/bin\/bash/m.test(src)&&/^case\s+["']?\$priority["']?\s+in$/m.test(src)&&/^\s*urgent\)/m.test(src)&&/^\s*normal\)/m.test(src)&&/^\s*\*\)/m.test(src)&&/^esac\s*$/m.test(src)&&!/^[ \t]*priority\s*=/m.test(src);}
+function scenarioDone(id){const s=scenarioState(id);return scenarioGoals(id,s).every(g=>g.ok)}
+function logScenario(s,type,value){s.log.push({kind:type,text:String(value)});if(s.log.length>70)s.log=s.log.slice(-70)}
+function scenarioCommand(raw){
+  const id=progress.scenarioSelected||'opening',s=scenarioState(id),text=raw.trim();if(!text)return;
+  const tk=tokenize(text);logScenario(s,'input',text);s.attempts++;
+  if(tk.error){logScenario(s,'error',tk.error);save();render();return;}
+  let result={ok:false,msg:'Command unavailable in this specific simulation. Enter help to see supported commands.'};
+  const [cmd,...args]=tk.arr;
+  if(cmd==='help')result={ok:true,msg:scenarioHelp(id)};
+  else if(cmd==='clear'){s.log=[];result={ok:true,msg:'Terminal cleared (scenario state preserved).'};}
+  else if(id==='opening')result=openingCommand(s,cmd,args);
+  else if(id==='startup')result=startupCommand(s,cmd,args);
+  else result=staffCommand(s,cmd,args);
+  if(result.msg)logScenario(s,result.ok?'output':'error',result.msg);
+  if(scenarioDone(id)&&!s.verified){s.verified=true;logScenario(s,'success','✓ Ticket resolved. Required conditions and verification checks passed in this simulated environment.');}
+  if(!scenarioDone(id))s.verified=false;
+  save();render();document.getElementById('scenario-input')?.focus({preventScroll:true});document.getElementById('scenario-log')?.scrollTo(0,999999);
+}
+function scenarioHelp(id){
+  if(id==='opening')return 'Inspect: systemctl status storefront | journalctl -u storefront -n 10 | ls -l /srv/storefront/config.env\nRepair: sudo chown storefront:storefront /srv/storefront/config.env | sudo chmod 640 /srv/storefront/config.env | sudo systemctl restart storefront\nVerify: systemctl is-active storefront | curl http://localhost/health';
+  if(id==='startup')return 'Review: cat requirements.txt | cat triage.sh\nEdit the script in the editor below, then run: bash triage.sh urgent | bash triage.sh normal | bash triage.sh other';
+  return 'Inspect: id avery | id blair | id casey | ls -ld /srv/reports | cat /etc/sudoers.d/deployers\nOffboard: sudo usermod --expiredate 1 avery | sudo gpasswd -d avery sudo | sudo gpasswd -d avery finance\nOnboard: sudo useradd -m casey | sudo usermod -aG reports casey | sudo chgrp reports /srv/reports | sudo chmod 750 /srv/reports\nElevate narrowly: sudo usermod -aG deployers blair\nVerify: sudo chage -l avery | id avery | id casey | id blair | ls -ld /srv/reports';
+}
+function openingCommand(s,cmd,args){
+  const ok=msg=>({ok:true,msg}),no=msg=>({ok:false,msg});const rest=args.join(' '),path='/srv/storefront/config.env';
+  if(cmd==='systemctl'&&rest==='status storefront'){s.sawStatus=true;return ok(`● storefront.service — internal orders dashboard (demo)\n   Loaded: loaded (/etc/systemd/system/storefront.service)\n   Active: ${s.service==='running'?'active (running)':'failed (Result: exit-code)'}\n   Main PID: ${s.service==='running'?'2044':'0'}\n   User: storefront`);}
+  if(cmd==='systemctl'&&rest==='is-active storefront')return s.service==='running'?ok('active'):no('failed');
+  if(cmd==='journalctl'&&rest==='-u storefront -n 10'){s.sawLogs=true;return ok(s.service==='running'?'storefront: service started successfully (demo log)':'storefront: FATAL could not read /srv/storefront/config.env: Permission denied\nsystemd: storefront.service: Main process exited, status=1/FAILURE');}
+  if(cmd==='ls'&&rest===`-l ${path}`)return ok(`-${s.mode==='600'?'rw-------':s.mode==='640'?'rw-r-----':'rwxrwxrwx'} 1 ${s.owner.split(':').join(' ')} 240 ${path}`);
+  if(cmd==='sudo'&&rest===`chown storefront:storefront ${path}`){s.owner='storefront:storefront';s.service='failed';s.healthChecked=false;return ok('Owner and group updated (simulation).');}
+  if(cmd==='sudo'&&rest===`chmod 640 ${path}`){s.mode='640';s.service='failed';s.healthChecked=false;return ok('File mode set to 640 — owner read/write, group read, others none (simulation).');}
+  if(cmd==='sudo'&&/^(chmod 777|chmod 666) /.test(rest))return no('Rejected: world-readable service configuration is unsafe. Use least privilege, not chmod 777.');
+  if(cmd==='sudo'&&rest==='systemctl restart storefront'){
+    if(s.owner!=='storefront:storefront'||s.mode!=='640'){s.service='failed';s.healthChecked=false;return no('Restart failed: storefront still cannot read its protected configuration. Check ownership and mode.');}
+    s.service='running';s.healthChecked=false;return ok('Restarted storefront.service successfully (demo).');
+  }
+  if(cmd==='curl'&&rest==='http://localhost/health'){
+    if(s.service!=='running')return no('curl: (7) Failed to connect to localhost:80 — service unavailable (demo).');
+    s.healthChecked=true;return ok('{"status":"ok","orders":"ready"}  [HTTP 200 · simulated]');
+  }
+  return no('Unsupported command in this incident. Type help for the investigation and repair commands.');
+}
+function startupCommand(s,cmd,args){
+  const ok=msg=>({ok:true,msg}),no=msg=>({ok:false,msg});
+  if(cmd==='cat'&&args.join(' ')==='requirements.txt')return ok('Product brief — triage.sh\nurgent → Escalate immediately\nnormal → Queue for today\nanything else → Review manually\nAcceptance: test each class independently; do not hardcode priority.');
+  if(cmd==='cat'&&args.join(' ')==='triage.sh')return ok(s.script);
+  if(cmd==='bash'&&args[0]==='triage.sh'&&args.length===2){
+    const input=args[1],expected= input==='urgent'?'Escalate immediately':input==='normal'?'Queue for today':'Review manually';
+    const suite=input==='urgent'?'urgent':input==='normal'?'normal':'unknown';
+    if(!['urgent','normal','other'].includes(input))return no('Test one of the specified inputs: urgent, normal, or other.');
+    const res=runBashSubset(`priority="${input}"\n${s.script}`);
+    const structural=validStartupStructure(s.script);
+    const passed=res.ok&&res.msg===expected&&structural;
+    s.tests[suite]=passed;s.lastTest=`${input}: ${passed?'PASS':'NOT YET'} · expected "${expected}"`;
+    return passed?ok(`${res.msg}\n✓ ${input} acceptance test passed.`):no(`${res.msg}\n✗ ${input} acceptance test failed. Expected: ${expected}${structural?'':'\nUse a complete case statement with urgent, normal, and * branches; do not assign priority.'}`);
+  }
+  return no('This project supports cat requirements.txt, cat triage.sh, and bash triage.sh urgent|normal|other. Edit the script below.');
+}
+function staffCommand(s,cmd,args){
+  const ok=msg=>({ok:true,msg}),no=msg=>({ok:false,msg});const rest=args.join(' ');
+  function markDirty(){s.verifiedChecks={};}
+  function showId(user){
+    const u=s.users[user];if(!u)return no(`id: '${user}': no such user (demo)`);
+    s.verifiedChecks[user]=true;const groups=u.groups.join(',')||'(none)';
+    return ok(`uid=${user==='avery'?1001:user==='blair'?1002:1003}(${user}) groups=${groups} (simulated)`);
+  }
+  if(cmd==='id'&&args.length===1&&['avery','blair','casey'].includes(args[0]))return showId(args[0]);
+  if(cmd==='ls'&&rest==='-ld /srv/reports'){s.verifiedChecks.folder=true;return ok(`${s.folderMode==='750'?'drwxr-x---':'drwxr-xr-x'}  root ${s.folderGroup} 4096 /srv/reports  (demo)`);}
+  if(cmd==='cat'&&rest==='/etc/sudoers.d/deployers'){
+    s.policySeen=true;return ok('# APPROVED CHANGE CHG-2048 — illustrative, pre-existing policy\n%deployers ALL=(root) /usr/bin/systemctl restart storefront\n# No permission to install packages, manage users, or gain general root shell.');
+  }
+  if(cmd==='sudo'&&rest==='chage -l avery'){
+    s.verifiedChecks.expiry=true;return ok(`User: avery\nAccount expires: ${s.users.avery.expired?'Jan 2, 1970 (expired)':'never'} (simulated)`);
+  }
+  if(cmd!=='sudo')return no('Use help for supported inspection and approved administrative commands.');
+  if(rest==='usermod --expiredate 1 avery'){markDirty();s.users.avery.expired=true;return ok('avery account expired: local logins disabled in this simulation.');}
+  if(rest==='usermod -L avery'){markDirty();s.users.avery.passwordLocked=true;return ok('Password locked. WARNING: password lock alone may not block SSH key logins. Expire the account too.');}
+  const remove=rest.match(/^gpasswd -d (avery) (sudo|finance)$/);
+  if(remove){markDirty();s.users.avery.groups=s.users.avery.groups.filter(g=>g!==remove[2]);return ok(`Removed avery from ${remove[2]} group (simulation).`);}
+  if(rest==='useradd -m casey'){
+    if(s.users.casey)return no('User casey already exists.');markDirty();s.users.casey={expired:false,groups:[]};return ok('Created new local user casey and home folder (simulation).');
+  }
+  if(rest==='usermod -aG reports casey'){
+    if(!s.users.casey)return no('Create casey first using sudo useradd -m casey.');markDirty();if(!s.users.casey.groups.includes('reports'))s.users.casey.groups.push('reports');return ok('casey added to reports group without admin access (simulation).');
+  }
+  if(rest==='chgrp reports /srv/reports'){markDirty();s.folderGroup='reports';return ok('Directory group changed to reports (simulation).');}
+  if(rest==='chmod 750 /srv/reports'){markDirty();s.folderMode='750';return ok('Mode 750: owner full access, reports group read/traverse, others denied (simulation).');}
+  if(rest==='usermod -aG deployers blair'){
+    if(!s.policySeen)return no('Before elevating access, inspect the approved sudoers policy: cat /etc/sudoers.d/deployers.');markDirty();if(!s.users.blair.groups.includes('deployers'))s.users.blair.groups.push('deployers');return ok('blair added to restricted deployers role (simulation).');
+  }
+  if(/(?:usermod\s+-aG\s+sudo|chmod\s+777|chmod\s+666|gpasswd\s+-a)/.test(rest))return no('Rejected: excessive privileges or world access violate this approved change. Apply the least privilege required.');
+  return no('This is a controlled exercise. Type help to see the approved commands and verification checks.');
+}
+function selectScenario(id){if(!scenarioCatalog.some(s=>s.id===id))return;progress.scenarioSelected=id;progress.view='scenarios';scenarioState(id);save();render();document.getElementById('scenario-details')?.scrollIntoView({behavior:'smooth',block:'start'});}
+function resetScenario(){const id=progress.scenarioSelected||'opening';if(!window.confirm('Start this fictional ticket again? Your progress in this ticket will be cleared.'))return;progress.scenarios[id]=scenarioSeed(id);save();render();}
+function toggleCoach(){const s=scenarioState();s.coaching=(s.coaching+1)%3;save();render();}
+function scenarioConsole(s){return `<section class="scenario-console" aria-label="Workplace scenario terminal"><div class="terminal-head"><div><strong>● Ubuntu workbench</strong><small> · isolated incident simulation</small></div><button class="tiny" data-action="scenario-help" type="button">Commands</button></div><div id="scenario-log" class="scenario-log" role="log" aria-live="polite">${s.log.map(line=>`<div class="line ${esc(line.kind)}">${line.kind==='input'?'<span class="ps1">tech@ubuntu:~$</span> ':''}${esc(line.text)}</div>`).join('')}</div><form id="scenario-form" class="scenario-form" autocomplete="off"><label for="scenario-input">tech@ubuntu:~$</label><input id="scenario-input" aria-label="Scenario command" placeholder="Type help or a Linux command…" spellcheck="false" autocapitalize="off" autocomplete="off"/><button class="run-btn" type="submit">Run ↵</button></form><div class="terminal-foot">Simulated responses · no network, real services, or accounts accessed</div></section>`;}
+function scenarioView(){
+  const sel=progress.scenarioSelected||'opening',c=scenarioById(sel),s=scenarioState(sel),goals=scenarioGoals(sel,s),passed=goals.filter(g=>g.ok).length,done=scenarioDone(sel);
+  return `<div class="page-heading"><div class="eyebrow">YOU'RE THE PERSON ON CALL</div><h1>Real-world Linux missions</h1><p>Practice the responsibilities behind the commands. You receive a workplace ticket, inspect evidence, make a safe change, and demonstrate that the business requirement is met.</p></div>
+  <div class="scenario-list" aria-label="Choose a work scenario">${scenarioCatalog.map((a,i)=>{const score=scenarioGoals(a.id,scenarioState(a.id));return `<button class="scenario-card ${a.id===sel?'selected':''}" data-scenario="${a.id}" ${a.id===sel?'aria-current="true"':''}><div class="scenario-card-top"><span class="eyebrow">CASE ${String(i+1).padStart(2,'0')}</span><span class="${score.every(x=>x.ok)?'text-success':'scenario-card-progress'}">${score.filter(x=>x.ok).length}/${score.length}</span></div><strong>${esc(a.title)}</strong><span>${esc(a.short)} · ${esc(a.duration)}</span></button>`}).join('')}</div>
+  <section class="scenario-ticket" id="scenario-details"><div class="scenario-ticket-head"><div><span class="tag">${esc(c.type)}</span><span class="tag gray">${esc(c.ticket)}</span></div><button type="button" class="tiny" data-action="scenario-reset">↻ Reset this ticket</button></div><h2>${esc(c.title)}</h2><p class="scenario-role">Your role: <strong>${esc(c.role)}</strong> · ${esc(c.difficulty)} · ${esc(c.duration)}</p><p class="scenario-context">${esc(c.context)}</p><div class="scenario-callout"><strong>🎯 Your assignment</strong><p>${esc(c.mission)}</p></div><p class="scenario-evidence">${esc(c.evidence)}</p></section>
+  <div class="scenario-workspace"><div class="scenario-main"><div class="scenario-action-heading"><h2>Work the ticket</h2><span>${passed}/${goals.length} requirements met</span></div>
+    ${sel==='startup'?startupEditor(s):''}
+    ${scenarioConsole(s)}
+    <div class="scenario-shortcuts"><b>Try an investigation</b><div>${(sel==='opening'?['systemctl status storefront','journalctl -u storefront -n 10','ls -l /srv/storefront/config.env']:sel==='startup'?['cat requirements.txt','bash triage.sh urgent','bash triage.sh normal','bash triage.sh other']:['id avery','id blair','ls -ld /srv/reports','cat /etc/sudoers.d/deployers']).map(cmd=>`<button class="tiny" type="button" data-scenario-fill="${esc(cmd)}">${esc(cmd)}</button>`).join('')}</div></div>
+  </div><aside class="scenario-side"><div class="scenario-goals"><h3>Acceptance checklist</h3><p>These requirements update when your simulation reaches the expected state.</p>${goals.map(g=>`<div class="scenario-goal"><span class="${g.ok?'goal-yes':'goal-open'}">${g.ok?'✓':'○'}</span><span>${esc(g.label)}</span></div>`).join('')}
+  <div class="scenario-score" role="progressbar" aria-label="Scenario requirements met" aria-valuemin="0" aria-valuemax="${goals.length}" aria-valuenow="${passed}"><span style="width:${Math.round(100*passed/goals.length)}%"></span></div>${done?`<p class="scenario-done">✓ Ticket resolved in simulation</p>`:`<p class="scenario-pending">${goals.length-passed} requirement${goals.length-passed===1?'':'s'} remaining</p>`}</div>
+  <div class="scenario-coach"><h3>Coach's desk</h3><p>Stuck? Reveal one clue at a time—just like asking a senior teammate for guidance.</p><button type="button" class="btn small" data-action="scenario-coach">${s.coaching<0?'Get a hint':s.coaching<2?'Next hint':'Start hints again'}</button>${s.coaching>=0?`<div class="scenario-coach-tip"><strong>Hint ${s.coaching+1} / 3</strong><p>${esc(c.hint[s.coaching])}</p></div>`:''}</div></aside></div>
+  ${done?`<section class="scenario-debrief"><span class="eyebrow">AFTER-ACTION REVIEW</span><h2>What you just accomplished</h2><p>${esc(c.debrief)}</p><p><strong>On a real Ubuntu VM:</strong> ${esc(c.realWorld)}</p><div class="scenario-next"><button type="button" class="btn primary" data-scenario="${scenarioCatalog[(scenarioCatalog.findIndex(x=>x.id===sel)+1)%scenarioCatalog.length].id}">Try another ticket →</button><button type="button" class="btn ghost" data-view="learn">Return to the course</button></div></section>`:`<section class="scenario-practice-note"><strong>Important:</strong> Complete the checklist using commands and tests. Merely running a command is not proof that a system is healthy or an account has the correct privileges. This is a fictional sandbox—not a production runbook.</section>`}`;
+}
+function startupEditor(s){return `<section class="scenario-editor-card"><div class="scenario-editor-title"><div><h3>✎ Code workbench · triage.sh</h3><p>Update the script, then run three acceptance tests in the terminal below.</p></div><span class="tag gray">SIMULATED BASH</span></div><label class="sr-only" for="scenario-code">Editable Bash script for triage</label><textarea id="scenario-code" spellcheck="false" autocapitalize="off" rows="12" aria-label="Editable Bash script">${esc(s.script)}</textarea>${s.lastTest?`<div class="scenario-test-feedback">${esc(s.lastTest)}</div>`:''}<div class="scenario-editor-foot"><span>No production requests or customer data used</span><button type="button" class="tiny" data-action="scenario-reset-script">Restore starter script</button></div></section>`;}
+
+function render(){const view=progress.view;document.getElementById('app').innerHTML=`<div class="wrap">${nav()}<main id="main">${view==='learn'?learnMarkup():view==='play'?playMarkup():view==='guide'?guideMarkup():view==='scenarios'?scenarioView():reviewMarkup()}</main><dialog id="pwa-install-dialog" class="install-help" aria-labelledby="pwa-dialog-title"><h2 id="pwa-dialog-title">Add Teach Me Linux to your Home Screen</h2><p>On iPhone, open this website in Safari, then:</p><ol><li>Tap the Share button in Safari.</li><li>Choose <strong>Add to Home Screen</strong>.</li><li>Make sure <strong>Open as Web App</strong> is enabled if offered, then tap Add.</li></ol><p>On Android, open it in Chrome and select <strong>Install app</strong> or <strong>Add to Home Screen</strong> from the browser menu. You can also use the website normally without installing it.</p><form method="dialog"><button class="btn primary" type="submit">Got it</button></form></dialog><footer class="footer"><span>Teach Me Linux · Ubuntu Edition · classroom-quality learning beta</span><span>Unofficial learning tool · Not affiliated with Canonical · <a target="_blank" rel="noopener noreferrer" href="https://ubuntu.com/desktop/docs/en/latest/tutorial/the-linux-command-line-for-beginners/">Official Ubuntu command-line guide</a> · <button type="button" class="reset-link" data-action="reset-progress">Clear my progress</button></span></footer></div>`;const out=document.getElementById('terminal-output');if(out)out.scrollTop=out.scrollHeight;}
+document.addEventListener('submit',e=>{if(e.target.id==='terminal-form'){e.preventDefault();const inp=document.getElementById('command-input');runCommand(inp.value);}if(e.target.id==='vi-command-form'){e.preventDefault();editorCommand(document.getElementById('vi-command-input').value);}if(e.target.id==='scenario-form'){e.preventDefault();scenarioCommand(document.getElementById('scenario-input').value);}});
+document.addEventListener('click',e=>{const btn=e.target.closest('button');if(!btn)return;
+  if(btn.hasAttribute('data-scenario')){selectScenario(btn.dataset.scenario);return;}
+  if(btn.hasAttribute('data-scenario-fill')){const inp=document.getElementById('scenario-input');if(inp){inp.value=btn.dataset.scenarioFill;inp.focus();}return;}
+  if(btn.hasAttribute('data-lesson')){selectLesson(Number(btn.dataset.lesson));return;}
+  if(btn.hasAttribute('data-view')){changeView(btn.dataset.view);return;}
+  if(btn.hasAttribute('data-quiz')){checkQuiz(btn.dataset.quiz);return;}
+  if(btn.hasAttribute('data-predict')){answerPrediction(Number(btn.dataset.predict));return;}
+  if(btn.hasAttribute('data-review')){toggleReview(Number(btn.dataset.review));return;}
+  if(btn.hasAttribute('data-fill')){const inp=document.getElementById('command-input');if(inp){inp.value=btn.dataset.fill;inp.focus();}return;}
+  if(btn.hasAttribute('data-practice')){const cmd=btn.dataset.practice;changeView('play');const inp=document.getElementById('command-input');if(inp){inp.value=cmd;inp.focus();}return;}
+  switch(btn.dataset.action){case 'install-pwa':{const d=document.getElementById('pwa-install-dialog');if(d&&typeof d.showModal==='function')d.showModal();break;}case 'scenario-help':scenarioCommand('help');break;case 'scenario-coach':toggleCoach();break;case 'scenario-reset':resetScenario();break;case 'scenario-reset-script':{const st=scenarioState('startup');st.script=scenarioStarter;st.tests={};st.lastTest='Starter restored. Rerun all acceptance tests.';save();render();break;}case 'vi-load-example':if(editor){editor.draft=lessons[progress.selected].steps[currentSteps()].hint;editor.mode='insert';snapshotCurrent();save();render();document.getElementById('vi-editor')?.focus({preventScroll:true});}break;case 'vi-insert':toggleViMode('insert');break;case 'vi-normal':toggleViMode('normal');break;case 'vi-save':editorSave();break;case 'vi-quit':editorDiscard();break;case 'start':{const next=firstIncomplete();selectLesson(next===undefined?lessonOrder.at(-1):next);break;}
+    case 'hint':{currentHint=currentHint===currentSteps()?-1:currentSteps();render();break;}
+    case 'solo-hint':{soloHint=!soloHint;render();break;}
+    case 'help':runCommand('help');break;
+    case 'reset-sim':{if(window.confirm('Reset this practice terminal? Files created here will be cleared, but completed lesson progress will stay.')){newFilesystem();if(progress.view==='learn'&&!progress.completed[progress.selected])progress.steps[progress.selected]=0;snapshotCurrent();save();render();}break;}
+    case 'reset-progress':{if(window.confirm('Clear all completed lessons and start from zero on this device?')){progress=defaultProgress();newFilesystem();snapshotCurrent();save();render();window.scrollTo(0,0);}break;}
+  }
+});
+document.addEventListener('change',e=>{if(e.target.id==='course-lesson-select')selectLesson(Number(e.target.value));});
+document.addEventListener('input',e=>{if(e.target.id==='scenario-code'){const st=scenarioState('startup');st.script=e.target.value.slice(0,12000);st.tests={};st.lastTest='Code changed — run all acceptance tests again.';st.verified=false;save();return;}if(e.target.id==='lesson-note'){progress.notes[progress.selected]=e.target.value.slice(0,3000);save();return;}if(e.target.id==='vi-editor'&&editor){editor.draft=e.target.value;snapshotCurrent();save();return;}if(e.target.id==='guide-search'){const old=e.target;guideSearch=old.value;const start=old.selectionStart;render();const neo=document.getElementById('guide-search');if(neo){neo.focus({preventScroll:true});try{neo.setSelectionRange(start,start);}catch(_e){}}}});
+document.addEventListener('keydown',e=>{if(e.target.id==='vi-editor'&&editor){if(e.key==='Escape'&&editor.mode==='insert'){e.preventDefault();toggleViMode('normal');return;}if(e.key==='i'&&editor.mode==='normal'){e.preventDefault();toggleViMode('insert');return;}return;}if(e.target.id!=='command-input')return;const inp=e.target;if(e.key==='ArrowUp'){e.preventDefault();historyIndex=Math.max(0,historyIndex-1);inp.value=terminalHistory[historyIndex]||'';}if(e.key==='ArrowDown'){e.preventDefault();historyIndex=Math.min(terminalHistory.length,historyIndex+1);inp.value=terminalHistory[historyIndex]||'';}});
+restoreCurrent();render();
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js', {scope:'./'}).catch(err => console.warn('Offline app registration unavailable:',err)));
+}
+</script>
+</body>
+</html>
